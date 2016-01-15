@@ -13,21 +13,19 @@ var player = {
           var date = new Date();
           d.time = date.getTime();
     			socket.emit('play', d);
-          setTimeout(function() {
-            player.play();
-          }, 3000);
     		});
       } else {
         var timer = new Timer();
         timer.start(track.time);
         spotify.status(1).done(function(d) {
           delay = timer.stop() / 1000;
-          console.log((difference(track.playing_position + delay, d.playing_position) * 1000) % 1000);
-          if (d.playing  && difference(track.playing_position + delay, d.playing_position) > 0.1) {
+          console.log('difference:' + difference((track.playing_position + delay), d.playing_position));
+          if (d.playing  && difference(track.playing_position + delay, d.playing_position) > 0.25) {
             spotify.togglePause().done(function(d) {
               if (track.playing) {
-                var uri = track.track.track_resource.uri + player.format(Math.round(track.playing_position + (timer.stop() / 1000)));
-                spotify.play(uri, function(d) {
+                var uri = track.track.track_resource.uri + '#' + player.format(Math.round(track.playing_position + (timer.stop() / 1000)));
+                spotify.play(uri).done(function(d) {
+                  socket.emit('status');
                   cb(d);
                 });
               }
@@ -35,9 +33,12 @@ var player = {
           } else {
             if (track.playing && difference(track.playing_position + delay, d.playing_position) > 0.1) {
               var uri = track.track.track_resource.uri + '#' + player.format(Math.round(track.playing_position + (timer.stop() / 1000)));
-              spotify.play(uri, function(d) {
+              spotify.play(uri).done(function(d) {
+                socket.emit('status');
                 cb(d);
               });
+            } else {
+              socket.emit('status');
             }
           }
         });

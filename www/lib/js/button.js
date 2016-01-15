@@ -22,7 +22,6 @@ $(document).ready(function() {
       $('.fa-stack').addClass('text-danger');
       $('.fa-stack').fadeOut().delay(100).fadeIn();
       player.mute = false;
-      player.play();
 
       clearInterval(interval);
       interval = setInterval(function() {
@@ -31,6 +30,7 @@ $(document).ready(function() {
     } else {
       $('.fa-play').addClass('fa-pause');
       player.mute = false;
+      socket.emit('status');
     }
   });
 

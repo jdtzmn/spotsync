@@ -47,4 +47,9 @@ io.on('connection', function(socket) {
     var roomname = Object.keys(io.sockets.adapter.sids[socket.id])[1];
     socket.broadcast.to(roomname).emit('play', data);
   });
+
+  socket.on('status', function() {
+    var roomname = Object.keys(io.sockets.adapter.sids[socket.id])[1];
+    socket.broadcast.to(roomname).emit('status');
+  });
 });

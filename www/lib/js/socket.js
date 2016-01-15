@@ -8,6 +8,14 @@ socket.on('first', function() {
 
 socket.on('play', function(d) {
   player.play(d, function() {
-    console.log('yay');
+    
+  });
+});
+
+socket.on('status', function() {
+  spotify.status(1).done(function(d) {
+    var date = new Date();
+    d.time = date.getTime();
+    socket.emit('play', d);
   });
 });
