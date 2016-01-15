@@ -26,7 +26,7 @@ var player = {
           if (d.playing  && difference(track.playing_position + delay, d.playing_position) > 0.1) {
             spotify.togglePause().done(function(d) {
               if (track.playing) {
-                var uri = track.track.track_resource.uri + player.format(Math.round(track.playing_position + (timer.stop() / 1000)));
+                var uri = track.track.track_resource.uri + '#' + player.format(Math.round(track.playing_position + (timer.stop() / 1000)));
                 spotify.play(uri, function(d) {
                   cb(d);
                 });
