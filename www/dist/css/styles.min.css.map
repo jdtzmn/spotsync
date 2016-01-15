@@ -1,0 +1,1 @@
+{"version":3,"sources":["styles.css"],"names":[],"mappings":"AAAA","file":"styles.min.css","sourcesContent":[".fa-stack {\n  font-size: 50vh !important;\n  width: 100%;\n}\n\n#csrf {\n  max-width: 290px;\n}\n\n.csrf {\n  padding-top: 40vh;\n}\n"],"sourceRoot":"/source/"}
