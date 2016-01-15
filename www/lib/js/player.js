@@ -24,18 +24,14 @@ var player = {
             spotify.togglePause().done(function(d) {
               if (track.playing) {
                 var uri = track.track.track_resource.uri + '#' + player.format(Math.round(track.playing_position + (timer.stop() / 1000)));
-<<<<<<< HEAD
                 spotify.play(uri).done(function(d) {
                   socket.emit('status');
-=======
-                spotify.play(uri, function(d) {
->>>>>>> 91b33c4157cbeeb295b225de1344d7128305ab62
                   cb(d);
                 });
               }
             });
           } else {
-            if (track.playing && difference(track.playing_position + delay, d.playing_position) > 0.1) {
+            if (track.playing && difference(track.playing_position + delay, d.playing_position) > 0.25) {
               var uri = track.track.track_resource.uri + '#' + player.format(Math.round(track.playing_position + (timer.stop() / 1000)));
               spotify.play(uri).done(function(d) {
                 socket.emit('status');
