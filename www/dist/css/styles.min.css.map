@@ -1,1 +1,1 @@
-{"version":3,"sources":["styles.css"],"names":[],"mappings":"AAAA","file":"styles.min.css","sourcesContent":[".fa-stack {\n  font-size: 50vmin !important;\n  width: 100%;\n}\n\n#csrf {\n  max-width: 290px;\n}\n\n.csrf {\n  padding-top: 40vh;\n}\n"],"sourceRoot":"/source/"}
+{"version":3,"sources":["styles.css"],"names":[],"mappings":"AAAA","file":"styles.min.css","sourcesContent":["body {\n  background: #1BB0CE;\n}\n\nlabel.form-control-label {\n  color: white;\n}\n\ndiv.csrf {\n  padding-top: 30vh;\n  max-width: 450px;\n  margin: 0 auto;\n}\n"],"sourceRoot":"/source/"}
