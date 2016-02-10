@@ -102,3 +102,5 @@ $RECYCLE.BIN/
 
 *.min.js
 *.min.css
+*.min.js.map
+*.min.css.map
