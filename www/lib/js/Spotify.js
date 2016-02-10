@@ -42,15 +42,6 @@ var Spotify = function(csrf) {
         cb("Spotify application is not running or doesn't support the internal web server.");
       } else {
 
-        $.ajax({
-          url: 'https://jsonp.afeld.me/?url=https://open.spotify.com/token',
-          method: 'GET',
-          success: function(response) {
-            token = response.t;
-            cb();
-          }
-        });
-
         var request = new XMLHttpRequest();
         request.open('GET', 'https://jsonp.afeld.me/?url=https://open.spotify.com/token', true);
 
