@@ -104,3 +104,5 @@ $RECYCLE.BIN/
 *.min.css
 *.min.js.map
 *.min.css.map
+
+secrets.js
