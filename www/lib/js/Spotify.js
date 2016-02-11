@@ -35,7 +35,6 @@ var Spotify = function(csrf) {
 
     request('/service/version.json?service=remote', function(response) {
       if (response === 'error' && port < 4380) {
-        if (port >= 4379) return new Error('spotify web helper not running.');
         port += 1;
         ready(cb);
       } else if (response === 'error' && port >= 4380) {

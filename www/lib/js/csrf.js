@@ -3,7 +3,9 @@ $(document).ready(function() {
     var spotify = new Spotify(query.csrf);
     spotify.ready(function(err) {
       if (err) return console.error(err);
-      alert('yay');
+      $('.form-control-label').fadeOut(function() {
+        $(this).text('Sign In:').fadeIn();
+      });
     });
   }
 });

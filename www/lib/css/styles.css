@@ -1,5 +1,9 @@
 body {
   background: #1BB0CE;
+  background: -webkit-linear-gradient(left top, #1BB0CE, #23CF5F);
+  background: -o-linear-gradient(left top, #1BB0CE, #23CF5F);
+  background: -moz-linear-gradient(left top, #1BB0CE, #23CF5F);
+  background: linear-gradient(left top, #1BB0CE, #23CF5F);
 }
 
 label.form-control-label {
