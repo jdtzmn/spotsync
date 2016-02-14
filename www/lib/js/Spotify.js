@@ -1,8 +1,10 @@
 var Spotify = function(csrf) {
 
+  var jquery = typeof jQuery !== 'undefined' ? true : false;
+
   //general request functions:
 
-  var port = 4370;
+  var port = 4371;
   var token = '';
 
   var request = function(path, cb) {
@@ -10,23 +12,38 @@ var Spotify = function(csrf) {
       return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 10) + '.';
     };
 
-    var request = new XMLHttpRequest();
-    request.open('GET', 'https://' + id() + 'spotilocal.com:' + port + path, true);
+    if (jquery) {
+      var options = {
+        url: 'https://' + id() + 'spotilocal.com:' + port + path,
+        error: function(xhr, status) {
+          cb(status);
+        },
+        success: function(response) {
+          var data = response;
+          cb(data);
+        }
+      };
 
-    request.onload = function() {
-      if (request.status >= 200 && request.status < 400) {
-        var data = JSON.parse(request.responseText);
-        cb(data);
-      } else {
+      $.get(options);
+    } else {
+      var req = new XMLHttpRequest();
+      req.open('GET', 'https://' + id() + 'spotilocal.com:' + port + path, true);
+
+      req.onload = function() {
+        if (req.status >= 200 && req.status < 400) {
+          var data = JSON.parse(req.responseText);
+          cb(data);
+        } else {
+          cb('error');
+        }
+      };
+
+      req.onerror = function() {
         cb('error');
-      }
-    };
+      };
 
-    request.onerror = function() {
-      cb('error');
-    };
-
-    request.send();
+      req.send();
+    }
   };
 
   //custom functions:
@@ -41,24 +58,47 @@ var Spotify = function(csrf) {
         cb("Spotify application is not running or doesn't support the internal web server.");
       } else {
 
-        var request = new XMLHttpRequest();
-        request.open('GET', 'https://jsonp.afeld.me/?url=https://open.spotify.com/token', true);
+        if (jquery) {
+          $.ajax({
+            url: 'https://jsonp.afeld.me/?url=https://open.spotify.com/token',
+            method: 'GET',
+            success: function(response) {
+              token = response.t;
+              request('/remote/status.json?csrf=' + csrf + '&oauth=' + token, function(response) {
+                if (typeof response.error !== 'undefined' && response.error.type === "4107") {
+                  cb('invalid CSRF token');
+                } else {
+                  cb();
+                }
+              });
+            }
+          });
+        } else {
+          var req = new XMLHttpRequest();
+          req.open('GET', 'https://jsonp.afeld.me/?url=https://open.spotify.com/token', true);
 
-        request.onload = function() {
-          if (request.status >= 200 && request.status < 400) {
-            var data = JSON.parse(request.responseText);
-            token = data.t;
-            cb();
-          } else {
+          req.onload = function() {
+            if (req.status >= 200 && req.status < 400) {
+              var data = JSON.parse(req.responseText);
+              token = data.t;
+              request('/remote/status.json?csrf=' + csrf + '&oauth=' + token, function(response) {
+                if (typeof response.error !== 'undefined' && response.error.type === "4107") {
+                  cb('invalid CSRF token');
+                } else {
+                  cb();
+                }
+              });
+            } else {
+              cb('error');
+            }
+          };
+
+          req.onerror = function() {
             cb('error');
-          }
-        };
+          };
 
-        request.onerror = function() {
-          cb('error');
-        };
-
-        request.send();
+          req.send();
+        }
 
       }
     });
