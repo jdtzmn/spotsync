@@ -63,16 +63,32 @@ app.get('/refresh', function(req, res) {
   }, function(err, response, body) {
     if (err) {
       res.send(err);
-    } else if (!err && response.statusCode == 200) {
+    } else if (response.statusCode == 200) {
       res.send(body);
     }
   });
 });
 
+var users = [];
+
 io.use(function(socket, next){
     if (socket.handshake.query.access_token) {
-      socket.username = socket.handshake.query.access_token;
-      return next();
+      request({
+        url: 'https://api.spotify.com/v1/me',
+        headers: {
+          'Authorization': 'Bearer ' + socket.handshake.query.access_token
+        }
+      }, function(err, response, body) {
+        if (err) {
+          console.log(err);
+        } else if (response.statusCode == 200) {
+          socket.usr = JSON.parse(body);
+          if (socket.usr.id === 'musition') {
+            socket.usr.playing = true;
+          }
+          return next();
+        }
+      });
     }
 
     next(new Error('Authentication error'));
@@ -80,12 +96,32 @@ io.use(function(socket, next){
 
 io.on('connection', function(socket) {
 
-  socket.on('user', function(data) {
-    //find user, then return if running...
+  users.push(socket.usr);
+
+  socket.on('users', function(data) {
+    if (data) {
+
+    } else {
+      var usrs = [];
+      for (var i in users) {
+        if (users[i].playing) usrs.push(users[i]);
+      }
+      if (socket.usr.playing) {
+        var index = usrs.indexOf(socket.usr);
+        socket.emit('users', usrs.slice(0, index).concat(usrs.slice(index + 1, usrs.length)));
+      } else {
+        socket.emit('users', usrs);
+      }
+    }
   });
 
   socket.on('status', function(data) {
     //check that the id is correct, then update their song
+  });
+
+  socket.on('disconnect', function() {
+    var index = users.indexOf(socket.usr);
+    if (index > -1) users.splice(index, 1);
   });
 });
 
