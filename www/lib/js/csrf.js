@@ -4,11 +4,10 @@ $(document).ready(function() {
       $('.csrf').fadeIn();
     });
   } else {
-    $('.main').fadeIn(function() {
-      $('body').scrollTop(0);
-      cards.show();
-    });
     cards.hide(true);
+    $('.main').fadeIn();
+    $('body').scrollTop(0);
+    cards.show();
   }
   if (query.csrf || window.localStorage.getItem('csrf') !== null) {
     $('#csrf').hide();
