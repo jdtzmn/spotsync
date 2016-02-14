@@ -25,12 +25,11 @@
 
     <span class="main" style="display: none">
       <nav class="navbar navbar-full navbar-fixed-top navbar-dark bg-inverse">
-        <div class="container"></div>
-          <a href="/" class="navbar-brand">Spotsync</a>
-          <div class="nav navbar-nav">
-            <a class="nav-item nav-link" href="/explore">Explore</a>
-            <a class="nav-item nav-link" href="/">Friends</a>
-          </div>
+        <a href="/" class="navbar-brand">Spotsync</a>
+        <div class="nav navbar-nav">
+          <a class="nav-item nav-link active">Explore</a>
+          <a class="nav-item nav-link friends">Friends</a>
+          <a class="nav-item nav-link stream">Stream</a>
         </div>
         <form class="form-inline pull-right" action="">
           <input name="q" class="form-control" type="text" autocomplete="off" placeholder="Search users">
@@ -38,24 +37,28 @@
         </form>
       </nav>
 
-      <div class="container card-columns card-deck">
+      <div class="container card-columns card-deck users">
         <div class="card card-inverse bg-inverse user">
           <div class="card-img-bg card-img">
-            <div class="song_name">My Songs Know What You Did In The Dark (Light Em Up)</div>
-            <img class="card-img" src="https://scontent.xx.fbcdn.net/hprofile-ash2/v/t1.0-1/p200x200/10383663_629784040500310_7569771200070584108_n.jpg?oh=a335ad667d38bdf3f0fed75c74068433&oe=57282EAE" alt="">
+            <div class="song_name"></div>
+            <img class="card-img icon" src="https://papaly.com/assets/covers/blank-profile-9567aab792e43198fb89a27c68817d53.png" alt="">
           </div>
           <div class="overlay">
             <i class="fa fa-volume-up play"></i>
           </div>
           <div class="card-block">
-            <h4 class="card-title display_name">mdaitzman</h4>
-            <h6 class="card-subtitle text-muted id">Sam Daitzman</h6>
+            <h4 class="card-title id"></h4>
+            <h6 class="card-subtitle text-muted display_name"></h6>
           </div>
         </div>
       </div>
+      <div class="container no-users" style="display: none">
+        <h1 class="text-center">No users are currently streaming</h1>
+      </div>
 
       <nav class="navbar navbar-full navbar-fixed-bottom navbar-dark bg-inverse">
-
+        <img class="navbar-brand user-icon img-circle" src="https://papaly.com/assets/covers/blank-profile-9567aab792e43198fb89a27c68817d53.png" alt="">
+        <div class="user-icon-popover">^</div>
       </nav>
     </span>
 

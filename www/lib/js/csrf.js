@@ -1,3 +1,4 @@
+var me = {};
 $(document).ready(function() {
   if (window.localStorage.getItem('csrf') === null || window.localStorage.getItem('refresh_token') === null) {
     $(document).ready(function() {
@@ -7,7 +8,25 @@ $(document).ready(function() {
     cards.hide(true);
     $('.main').fadeIn();
     $('body').scrollTop(0);
-    cards.show();
+  }
+  if (window.localStorage.getItem('refresh_token') !== null) {
+    $.ajax({
+      url: '/refresh?refresh_token=' + window.localStorage.getItem('refresh_token'),
+      success: function(res) {
+        var data = JSON.parse(res);
+        socket(data.access_token);
+        $.ajax({
+          url: 'https://api.spotify.com/v1/me',
+          headers: {
+            Authorization: 'Bearer ' + data.access_token
+          },
+          success: function(res) {
+            me = res;
+            console.log(res);
+          }
+        });
+      }
+    });
   }
   if (query.csrf || window.localStorage.getItem('csrf') !== null) {
     $('#csrf').hide();
@@ -33,23 +52,8 @@ $(document).ready(function() {
       } else {
         window.localStorage.setItem('csrf', csrf);
         if (window.localStorage.getItem('refresh_token') !== null) {
-          $.ajax({
-            url: '/refresh?refresh_token=' + window.localStorage.getItem('refresh_token'),
-            success: function(res) {
-              var data = JSON.parse(res);
-              $.ajax({
-                url: 'https://api.spotify.com/v1/me',
-                headers: {
-                  Authorization: 'Bearer ' + data.access_token
-                },
-                success: function(res) {
-                  $('.csrf').fadeOut();
-                  $('.main').fadeIn();
-                  console.log(res);
-                }
-              });
-            }
-          });
+          $('.csrf').fadeOut();
+          $('.main').fadeIn();
         } else {
           if ($('.form-control-label').text() !== 'Sign In:') {
             $('#csrf').animate({ width: 'hide' }, function() {

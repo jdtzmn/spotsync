@@ -62,3 +62,20 @@ div.song_name {
   display: none;
   left: 5px;
 }
+
+a.nav-item {
+  cursor: pointer;
+}
+
+div.no-users {
+  padding-top: 10vh;
+}
+
+img.user-icon {
+  width: 45px;
+  height: 50px;
+}
+
+div.user-icon-popover {
+  
+}
