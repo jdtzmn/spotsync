@@ -11,20 +11,135 @@
   </head>
   <body>
 
-    <div class="csrf">
-      <form>
-        <div class="form-group-lg row">
+    <div class="csrf" style="display: none">
+      <form action="javascript:void(0)">
+        <div class="form-group-lg form-group row">
           <label for="csrf" class="col-sm-2 form-control-label">CSRF: </label>
           <div class="col-sm-9">
-            <input id="csrf" type="text" name="csrf" class="form-control" placeholder="000000000000000000000000000000000">
+            <input id="csrf" type="text" autocomplete="off" name="csrf" class="form-control" placeholder="000000000000000000000000000000000">
+            <a href="/login" class="auth btn btn-success" style="display: none">Login to Spotify</a>
           </div>
         </div>
       </form>
     </div>
 
+    <span class="main" style="display: none">
+      <nav class="navbar navbar-full navbar-fixed-top navbar-dark bg-inverse">
+        <div class="container"></div>
+          <a href="/" class="navbar-brand">Spotsync</a>
+          <div class="nav navbar-nav">
+            <a class="nav-item nav-link" href="/explore">Explore</a>
+            <a class="nav-item nav-link" href="/">Friends</a>
+          </div>
+        </div>
+        <form class="form-inline pull-right" action="">
+          <input name="q" class="form-control" type="text" autocomplete="off" placeholder="Search users">
+          <button class="btn btn-info-outline" type="submit">Search</button>
+        </form>
+      </nav>
+
+      <div class="container card-columns card-deck">
+        <div class="card card-inverse bg-inverse user">
+          <img class="card-img" src="https://scontent.xx.fbcdn.net/hprofile-ash2/v/t1.0-1/p200x200/10383663_629784040500310_7569771200070584108_n.jpg?oh=a335ad667d38bdf3f0fed75c74068433&oe=57282EAE" alt="">
+          <div class="card-block">
+            <h4 class="card-title display_name">mdaitzman</h4>
+            <h6 class="card-subtitle text-muted id">Sam Daitzman</h6>
+          </div>
+        </div>
+        <div class="card card-inverse bg-inverse user">
+          <img class="card-img" src="https://scontent.xx.fbcdn.net/hprofile-ash2/v/t1.0-1/p200x200/10383663_629784040500310_7569771200070584108_n.jpg?oh=a335ad667d38bdf3f0fed75c74068433&oe=57282EAE" alt="">
+          <div class="card-block">
+            <h4 class="card-title display_name">mdaitzman</h4>
+            <h6 class="card-subtitle text-muted id">Sam Daitzman</h6>
+          </div>
+        </div>
+        <div class="card card-inverse bg-inverse user">
+          <img class="card-img" src="https://scontent.xx.fbcdn.net/hprofile-ash2/v/t1.0-1/p200x200/10383663_629784040500310_7569771200070584108_n.jpg?oh=a335ad667d38bdf3f0fed75c74068433&oe=57282EAE" alt="">
+          <div class="card-block">
+            <h4 class="card-title display_name">mdaitzman</h4>
+            <h6 class="card-subtitle text-muted id">Sam Daitzman</h6>
+          </div>
+        </div>
+        <div class="card card-inverse bg-inverse user">
+          <img class="card-img" src="https://scontent.xx.fbcdn.net/hprofile-ash2/v/t1.0-1/p200x200/10383663_629784040500310_7569771200070584108_n.jpg?oh=a335ad667d38bdf3f0fed75c74068433&oe=57282EAE" alt="">
+          <div class="card-block">
+            <h4 class="card-title display_name">mdaitzman</h4>
+            <h6 class="card-subtitle text-muted id">Sam Daitzman</h6>
+          </div>
+        </div>
+        <div class="card card-inverse bg-inverse user">
+          <img class="card-img" src="https://scontent.xx.fbcdn.net/hprofile-ash2/v/t1.0-1/p200x200/10383663_629784040500310_7569771200070584108_n.jpg?oh=a335ad667d38bdf3f0fed75c74068433&oe=57282EAE" alt="">
+          <div class="card-block">
+            <h4 class="card-title display_name">mdaitzman</h4>
+            <h6 class="card-subtitle text-muted id">Sam Daitzman</h6>
+          </div>
+        </div>
+        <div class="card card-inverse bg-inverse user">
+          <img class="card-img" src="https://scontent.xx.fbcdn.net/hprofile-ash2/v/t1.0-1/p200x200/10383663_629784040500310_7569771200070584108_n.jpg?oh=a335ad667d38bdf3f0fed75c74068433&oe=57282EAE" alt="">
+          <div class="card-block">
+            <h4 class="card-title display_name">mdaitzman</h4>
+            <h6 class="card-subtitle text-muted id">Sam Daitzman</h6>
+          </div>
+        </div>
+        <div class="card card-inverse bg-inverse user">
+          <img class="card-img" src="https://scontent.xx.fbcdn.net/hprofile-ash2/v/t1.0-1/p200x200/10383663_629784040500310_7569771200070584108_n.jpg?oh=a335ad667d38bdf3f0fed75c74068433&oe=57282EAE" alt="">
+          <div class="card-block">
+            <h4 class="card-title display_name">mdaitzman</h4>
+            <h6 class="card-subtitle text-muted id">Sam Daitzman</h6>
+          </div>
+        </div>
+        <div class="card card-inverse bg-inverse user">
+          <img class="card-img" src="https://scontent.xx.fbcdn.net/hprofile-ash2/v/t1.0-1/p200x200/10383663_629784040500310_7569771200070584108_n.jpg?oh=a335ad667d38bdf3f0fed75c74068433&oe=57282EAE" alt="">
+          <div class="card-block">
+            <h4 class="card-title display_name">mdaitzman</h4>
+            <h6 class="card-subtitle text-muted id">Sam Daitzman</h6>
+          </div>
+        </div>
+        <div class="card card-inverse bg-inverse user">
+          <img class="card-img" src="https://scontent.xx.fbcdn.net/hprofile-ash2/v/t1.0-1/p200x200/10383663_629784040500310_7569771200070584108_n.jpg?oh=a335ad667d38bdf3f0fed75c74068433&oe=57282EAE" alt="">
+          <div class="card-block">
+            <h4 class="card-title display_name">mdaitzman</h4>
+            <h6 class="card-subtitle text-muted id">Sam Daitzman</h6>
+          </div>
+        </div>
+        <div class="card card-inverse bg-inverse user">
+          <img class="card-img" src="https://scontent.xx.fbcdn.net/hprofile-ash2/v/t1.0-1/p200x200/10383663_629784040500310_7569771200070584108_n.jpg?oh=a335ad667d38bdf3f0fed75c74068433&oe=57282EAE" alt="">
+          <div class="card-block">
+            <h4 class="card-title display_name">mdaitzman</h4>
+            <h6 class="card-subtitle text-muted id">Sam Daitzman</h6>
+          </div>
+        </div>
+        <div class="card card-inverse bg-inverse user">
+          <img class="card-img" src="https://scontent.xx.fbcdn.net/hprofile-ash2/v/t1.0-1/p200x200/10383663_629784040500310_7569771200070584108_n.jpg?oh=a335ad667d38bdf3f0fed75c74068433&oe=57282EAE" alt="">
+          <div class="card-block">
+            <h4 class="card-title display_name">mdaitzman</h4>
+            <h6 class="card-subtitle text-muted id">Sam Daitzman</h6>
+          </div>
+        </div>
+        <div class="card card-inverse bg-inverse user">
+          <img class="card-img" src="https://scontent.xx.fbcdn.net/hprofile-ash2/v/t1.0-1/p200x200/10383663_629784040500310_7569771200070584108_n.jpg?oh=a335ad667d38bdf3f0fed75c74068433&oe=57282EAE" alt="">
+          <div class="card-block">
+            <h4 class="card-title display_name">mdaitzman</h4>
+            <h6 class="card-subtitle text-muted id">Sam Daitzman</h6>
+          </div>
+        </div>
+        <div class="card card-inverse bg-inverse user">
+          <img class="card-img" src="https://scontent.xx.fbcdn.net/hprofile-ash2/v/t1.0-1/p200x200/10383663_629784040500310_7569771200070584108_n.jpg?oh=a335ad667d38bdf3f0fed75c74068433&oe=57282EAE" alt="">
+          <div class="card-block">
+            <h4 class="card-title display_name">mdaitzman</h4>
+            <h6 class="card-subtitle text-muted id">Sam Daitzman</h6>
+          </div>
+        </div>
+      </div>
+
+      <nav class="navbar navbar-full navbar-fixed-bottom navbar-dark bg-inverse">
+
+      </nav>
+    </span>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js" charset="utf-8"></script>
-    <script src="//cdn.rawgit.com/nutgaard/SpotifyHttpJs/master/Spotify.js" charset="utf-8"></script>
+    <script src="/socket.io/socket.io.js" charset="utf-8"></script>
     <script src="/js/scripts.min.js" charset="utf-8"></script>
     <script src="http://localhost:35729/livereload.js" charset="utf-8"></script>
   </body>
