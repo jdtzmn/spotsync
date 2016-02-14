@@ -9,3 +9,15 @@ var query = function() {
   }
   return obj;
 }();
+
+
+if (query.code) {
+  $.ajax({
+    url: '/token?code=' + query.code,
+    success: function(res) {
+      var data = JSON.parse(res);
+      window.localStorage.setItem('refresh_token', data.refresh_token);
+      window.location.replace(window.location.origin);
+    }
+  });
+}
