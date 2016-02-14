@@ -1,5 +1,5 @@
 var cards = {
-  show: function(instant) {
+  show: function(instant, cb) {
     if (instant) return $('.card').removeAttr('style').css('opacity', 1);
     function animateTopRow() {
       $('.card').filter(function() {
@@ -11,6 +11,8 @@ var cards = {
         setTimeout(function() {
           animateTopRow();
         }, 60);
+      } else {
+        cb();
       }
     }
     animateTopRow();
@@ -21,7 +23,7 @@ var cards = {
 };
 
 $.fn.extend({
-    animateCss: function (animationName, cb) {
+    animateCss: function(animationName, cb) {
         var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
         $(this).addClass('animated ' + animationName).one(animationEnd, function() {
             $(this).removeClass('animated ' + animationName);
