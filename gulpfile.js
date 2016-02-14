@@ -32,7 +32,6 @@ gulp.task('css', function() {
 gulp.task('serve', function() {
 	var server = gls.new('index.js');
 	server.start();
-	console.log('Listening on port: ' + (process.env.PORT || 3000));
 
 	gulp.watch(['www/lib/css/**/*.css', 'www/lib/js/**/*.js', 'www/**/*.html'], function(file) {
 		setTimeout(function() {
