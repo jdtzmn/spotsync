@@ -77,5 +77,23 @@ img.user-icon {
 }
 
 div.user-icon-popover {
-  
+  position: absolute;
+  width: 45px;
+  height: 50px;
+  text-align: center;
+  vertical-align: middle;
+  top: 20px;
+}
+
+.user-icon-popover > .fa-stack {
+  font-size: 15px;
+}
+
+.user-icon-popover > .fa-stack > .fa-caret-up {
+  color: white;
+}
+
+.user-icon-popover > .fa-stack > .fa-square {
+  color: #373a3c;
+  opacity: 0.5;
 }

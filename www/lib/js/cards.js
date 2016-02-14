@@ -5,8 +5,10 @@ var cards = {
     if (data === null || data.length === 0) {
       $('.users').hide();
       return $('.no-users').fadeIn();
+    } else {
+      $('.no-users').fadeOut();
+      $('.users').show();
     }
-    if (instant) return $('.card').removeAttr('style').css('opacity', 1);
 
     if (data && typeof data !== 'function') {
       var directives = {
@@ -39,6 +41,8 @@ var cards = {
       $('.users').render(data, directives);
     }
 
+    if (instant) return $('.card').removeAttr('style').css('opacity', 1);
+
     $('img.card-img.icon').hover(function(){
       $(this).stop(true,true).animate({opacity: 0}, 400);
       $(this).parent().removeAttr('style').css('background', "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('" + 'https://i.scdn.co/image/e34cbf5783a92faa387cbe97dbaa8376008718eb' + "')");
@@ -65,7 +69,7 @@ var cards = {
           animateTopRow();
         }, 60);
       } else {
-        cb();
+        if (cb) cb();
       }
     }
     animateTopRow();

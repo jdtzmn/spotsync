@@ -97,6 +97,7 @@ io.use(function(socket, next){
 io.on('connection', function(socket) {
 
   users.push(socket.usr);
+  socket.broadcast.emit('connection', socket.usr);
 
   socket.on('users', function(data) {
     if (data) {
@@ -122,6 +123,7 @@ io.on('connection', function(socket) {
   socket.on('disconnect', function() {
     var index = users.indexOf(socket.usr);
     if (index > -1) users.splice(index, 1);
+    socket.broadcast.emit('connection');
   });
 });
 
