@@ -55,6 +55,7 @@ var socket = function(access_token, cb) {
   socket.on('update', function(cb) {
     if (spotify.ready()) {
       spotify.status(function(data) {
+        data.from = play.time();
         socket.emit('update', data);
         if (cb) cb();
       });
