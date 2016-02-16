@@ -6,6 +6,7 @@ var Spotify = function(csrf) {
 
   var port = 4371;
   var token = '';
+  var done = false;
 
   var request = function(path, cb) {
     var id = function() {
@@ -50,6 +51,11 @@ var Spotify = function(csrf) {
 
   this.ready = function ready(cb) {
 
+    if (done) {
+      if (cb) cb();
+      return true;
+    }
+
     request('/service/version.json?service=remote', function(response) {
       if (response === 'error' && port < 4380) {
         port += 1;
@@ -68,7 +74,8 @@ var Spotify = function(csrf) {
                 if (typeof response.error !== 'undefined' && response.error.type === "4107") {
                   cb('invalid CSRF token');
                 } else {
-                  cb();
+                  if (cb) cb();
+                  done = true;
                 }
               });
             }
@@ -85,7 +92,8 @@ var Spotify = function(csrf) {
                 if (typeof response.error !== 'undefined' && response.error.type === "4107") {
                   cb('invalid CSRF token');
                 } else {
-                  cb();
+                  if (cb) cb();
+                  done = true;
                 }
               });
             } else {
