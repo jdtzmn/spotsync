@@ -105,7 +105,7 @@ io.on('connection', function(socket) {
     socket.emit('users', usrs);
   });
 
-  socket.on('status', function(data) {
+  socket.on('status', function(data, cb) {
     var i, ii;
     if (typeof data === 'string') data = [data];
     var usrs = [];
@@ -116,9 +116,11 @@ io.on('connection', function(socket) {
         }
       }
     }
-    socket.emit('status', usrs);
+    if (!cb) socket.emit('status', usrs);
 
     var obj = {};
+    console.log(data);
+    console.log(users);
     for (i in data) {
       for (ii in users) {
         if (users[ii].socket_id === data[i]) {
@@ -149,7 +151,8 @@ io.on('connection', function(socket) {
           }
         }
       }
-      socket.emit('status', usrs);
+      if (!cb) socket.emit('status', usrs);
+      if (cb) cb(usrs);
       clearInterval(interval);
     }, 1000);
   });
