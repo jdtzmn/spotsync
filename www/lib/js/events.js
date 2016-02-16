@@ -48,6 +48,7 @@ $(document).ready(function() {
           alert('You must be playing music to start streaming!');
         } else {
           $('.stream-sm').addClass('pulse');
+          data.from = play.time();
           socket.emit('update', data);
         }
       });
