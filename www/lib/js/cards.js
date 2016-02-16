@@ -3,11 +3,17 @@ var cards = {
     if (typeof instant === 'function') cb = instant;
     if (typeof data === 'function') cb = data;
     if (data === null || data.length === 0) {
-      $('.users').hide();
-      return $('.no-users').fadeIn();
+        if ($('.nav-link.friends').hasClass('active')) {
+          return $('.no-users').find('h1').text('No friends are currently streaming').parent().fadeIn();
+        } else {
+          return $('.no-users').find('h1').text('No users are currently streaming').parent().fadeIn();
+        }
     } else {
-      $('.no-users').fadeOut();
-      $('.users').show();
+      if ($('.no-users').is(':visible')) {
+        return $('.no-users').fadeOut(function() {
+          cards.show(instant, data, cb);
+        });
+      }
     }
 
     if (data && typeof data !== 'function') {
@@ -35,25 +41,30 @@ var cards = {
               return this.images[0].url;
             }
           }
+        },
+        card: {
+          'data-id': function(params) {
+            return this.socket_id;
+          }
         }
       };
 
       $('.users').render(data, directives);
     }
 
-    if (instant) return $('.card').removeAttr('style').css('opacity', 1);
+    if (instant) return $('.card').css('opacity', 1);
 
-    $('img.card-img.icon').hover(function(){
-      $(this).stop(true,true).animate({opacity: 0}, 400);
-      $(this).parent().removeAttr('style').css('background', "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('" + 'https://i.scdn.co/image/e34cbf5783a92faa387cbe97dbaa8376008718eb' + "')");
-      $(this).parent().parent().find('.overlay').stop().fadeIn();
+    $('img.card-img').hover(function(){
+      socket.emit('status', $(this).parent().parent().attr('data-id'));
+      $(this).stop().animate({opacity: 0}, 400);
+      if (!$('.stream-sm').hasClass('pulse')) $(this).parent().parent().find('.overlay').stop().fadeIn();
       $(this).parent().find('.song_name').stop().fadeIn(function() {
         $(this).marquee();
       });
     }, function() {
-      $(this).stop(true,true).animate({opacity: 1}, 400);
+      $(this).stop().animate({opacity: 1}, 400);
       $(this).parent().parent().find('.overlay').stop().fadeOut();
-      $(this).parent().find('.song_name').stop().animate({scrollLeft: 0}, 500).fadeOut(function() {
+      $(this).parent().find('.song_name').stop().animate({scrollLeft: 0}, 0).fadeOut(function() {
         $(this).css('opacity', 1);
       }).css('opacity', 0);
     });
@@ -74,8 +85,24 @@ var cards = {
     }
     animateTopRow();
   },
-  hide: function() {
-    return $('.card').removeAttr('style').css('opacity', 0);
+  hide: function(instant, cb) {
+    if (instant) {
+      $('.no-users').hide();
+      $('.card').css('opacity', 0);
+      $('.card').hide();
+      if (cb) cb();
+    } else {
+      $('.no-users:visible').fadeOut(function() {
+        if (cb) cb();
+      });
+      $('.card:visible').fadeOut(function() {
+        $(this).css('opacity', 0);
+        if (cb) cb();
+      });
+      if (!$('.no-users').is(':visible') && !$('.card').is(':visible')) {
+        if (cb) cb();
+      }
+    }
   }
 };
 

@@ -76,7 +76,9 @@ img.user-icon {
   height: 50px;
 }
 
-div.user-icon-popover {
+div.user-icon-dropdown {
+  display: none;
+  pointer-events: none;
   position: absolute;
   width: 45px;
   height: 50px;
@@ -85,15 +87,39 @@ div.user-icon-popover {
   top: 20px;
 }
 
-.user-icon-popover > .fa-stack {
+.user-icon-dropdown > .fa-stack {
   font-size: 15px;
 }
 
-.user-icon-popover > .fa-stack > .fa-caret-up {
+.user-icon-dropdown > .fa-stack > .fa-caret-up {
   color: white;
 }
 
-.user-icon-popover > .fa-stack > .fa-square {
+.user-icon-dropdown > .fa-stack > .fa-square {
   color: #373a3c;
   opacity: 0.5;
+}
+
+button.user-dropdown-toggle {
+  background: none;
+  border: none;
+  padding: 0px;
+  margin: 0px;
+  outline: none;
+}
+
+.dropdown-toggle.user-dropdown-toggle:after {
+  display: none;
+}
+
+.pulse {
+  animation-name: pulse;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes pulse {
+  100% {color: #C2412D}
 }

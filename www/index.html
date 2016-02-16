@@ -27,9 +27,9 @@
       <nav class="navbar navbar-full navbar-fixed-top navbar-dark bg-inverse">
         <a href="/" class="navbar-brand">Spotsync</a>
         <div class="nav navbar-nav">
-          <a class="nav-item nav-link active">Explore</a>
-          <a class="nav-item nav-link friends">Friends</a>
-          <a class="nav-item nav-link stream">Stream</a>
+          <a class="nav-item nav-link active">Explore <i class="fa fa-search"></i></a>
+          <a class="nav-item nav-link friends">Friends <i class="fa fa-users"></i></a>
+          <a class="nav-item nav-link stream">Stream <i class="fa fa-microphone stream-sm"></i></a>
         </div>
         <form class="form-inline pull-right" action="">
           <input name="q" class="form-control" type="text" autocomplete="off" placeholder="Search users">
@@ -40,7 +40,7 @@
       <div class="container card-columns card-deck users">
         <div class="card card-inverse bg-inverse user">
           <div class="card-img-bg card-img">
-            <div class="song_name"></div>
+            <div class="song_name">Save Rock and Roll</div>
             <img class="card-img icon" src="https://papaly.com/assets/covers/blank-profile-9567aab792e43198fb89a27c68817d53.png" alt="">
           </div>
           <div class="overlay">
@@ -53,12 +53,19 @@
         </div>
       </div>
       <div class="container no-users" style="display: none">
-        <h1 class="text-center">No users are currently streaming</h1>
+        <h1 class="text-center"></h1>
       </div>
 
       <nav class="navbar navbar-full navbar-fixed-bottom navbar-dark bg-inverse">
-        <img class="navbar-brand user-icon img-circle" src="https://papaly.com/assets/covers/blank-profile-9567aab792e43198fb89a27c68817d53.png" alt="">
-        <div class="user-icon-popover">
+        <div class="dropdown">
+          <button class="dropdown-toggle user-dropdown-toggle" id="user-dropdown-toggle" data-toggle="dropdown">
+            <img class="navbar-brand user-icon img-circle" src="https://papaly.com/assets/covers/blank-profile-9567aab792e43198fb89a27c68817d53.png" alt="">
+          </button>
+          <div class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
+            <a class="dropdown-item logout">Logout</a>
+          </div>
+        </div>
+        <div class="user-icon-dropdown">
           <span class="fa-stack fa-lg">
             <i class="fa fa-square fa-stack-2x"></i>
             <i class="fa fa-chevron-up fa-stack-1x"></i>

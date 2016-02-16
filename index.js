@@ -25,9 +25,9 @@ app.get('/', function(req, res) {
 });
 
 app.get('/login', function(req, res) {
-  res.redirect('https://accounts.spotify.com/authorize?response_type=code&client_id=' +
+  res.redirect('https://accounts.spotify.com/authorize?response_type=code&show_dialog=true&client_id=' +
   secrets.spotify_id +
-  '&redirect_uri=' + encodeURIComponent('http://localhost:3000'));
+  '&scope=' + encodeURIComponent('user-follow-read') + '&redirect_uri=' + encodeURIComponent('http://localhost:3000'));
 });
 
 app.get('/token', function(req, res) {
@@ -83,9 +83,6 @@ io.use(function(socket, next){
           console.log(err);
         } else if (response.statusCode == 200) {
           socket.usr = JSON.parse(body);
-          if (socket.usr.id === 'musition') {
-            socket.usr.playing = true;
-          }
           return next();
         }
       });
@@ -96,28 +93,87 @@ io.use(function(socket, next){
 
 io.on('connection', function(socket) {
 
+  socket.usr.socket_id = socket.id;
   users.push(socket.usr);
-  socket.broadcast.emit('connection', socket.usr);
+  socket.broadcast.emit('connection');
 
-  socket.on('users', function(data) {
-    if (data) {
-
-    } else {
-      var usrs = [];
-      for (var i in users) {
-        if (users[i].playing) usrs.push(users[i]);
-      }
-      if (socket.usr.playing) {
-        var index = usrs.indexOf(socket.usr);
-        socket.emit('users', usrs.slice(0, index).concat(usrs.slice(index + 1, usrs.length)));
-      } else {
-        socket.emit('users', usrs);
-      }
+  socket.on('users', function() {
+    var usrs = [];
+    for (var i in users) {
+      if (users[i].playing && users[i] !== socket.usr) usrs.push(users[i]);
     }
+    socket.emit('users', usrs);
   });
 
   socket.on('status', function(data) {
-    //check that the id is correct, then update their song
+    var i, ii;
+    if (typeof data === 'string') data = [data];
+    var usrs = [];
+    for (i in data) {
+      for (ii in users) {
+        if (users[ii].socket_id === data[i] && users[ii].playing) {
+          usrs.push(users[ii]);
+        }
+      }
+    }
+    socket.emit('status', usrs);
+
+    var obj = {};
+    for (i in data) {
+      for (ii in users) {
+        if (users[ii].socket_id === data[i]) {
+          obj[users[ii].socket_id] = false;
+          io.sockets.connected[users[ii].socket_id].emit('update', function(data) {
+            obj[users[ii].socket_id] = true;
+          });
+        }
+      }
+    }
+
+    var count = 0;
+    var interval = setInterval(function() {
+      count += 1;
+      if (count >= 10) {
+        clearInterval(interval);
+      }
+      console.log(obj);
+      console.log(count);
+      for (i in obj) {
+        if (!obj[i]) return;
+      }
+      var usrs = [];
+      for (i in data) {
+        for (ii in users) {
+          if (users[ii].socket_id === data[i] && users[ii].playing) {
+            usrs.push(users[ii]);
+          }
+        }
+      }
+      socket.emit('status', usrs);
+      clearInterval(interval);
+    }, 1000);
+  });
+
+  socket.on('update', function(data) {
+    var changed = socket.usr.playing ? JSON.parse(JSON.stringify(socket.usr.playing)) : false;
+    if (data === 'false') {
+      socket.usr.playing = false;
+    } else {
+      socket.usr.playing = data.playing;
+      socket.usr.track = data.track.track_resource;
+      socket.usr.track.length = data.track.length;
+      socket.usr.playing_position = data.playing_position;
+      socket.usr.from = data.from;
+    }
+    changed = changed !== socket.usr.playing;
+    var usrs = [];
+    for (var i in users) {
+      if (socket.id === users[i].id) users[i] = socket.usr;
+      if (users[i].playing) usrs.push(users[i]);
+    }
+    if (changed) {
+      socket.broadcast.emit('users');
+    }
   });
 
   socket.on('disconnect', function() {

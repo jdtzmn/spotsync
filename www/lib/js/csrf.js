@@ -1,8 +1,10 @@
 var me = {};
+var spotify = {};
 $(document).ready(function() {
   if (window.localStorage.getItem('csrf') === null || window.localStorage.getItem('refresh_token') === null) {
     $(document).ready(function() {
       $('.csrf').fadeIn();
+      $('#csrf').focus();
     });
   } else {
     cards.hide(true);
@@ -14,16 +16,21 @@ $(document).ready(function() {
       url: '/refresh?refresh_token=' + window.localStorage.getItem('refresh_token'),
       success: function(res) {
         var data = JSON.parse(res);
-        socket(data.access_token);
-        $.ajax({
-          url: 'https://api.spotify.com/v1/me',
-          headers: {
-            Authorization: 'Bearer ' + data.access_token
-          },
-          success: function(res) {
-            me = res;
-            console.log(res);
-          }
+        socket(data.access_token, function() {
+          $.ajax({
+            url: 'https://api.spotify.com/v1/me',
+            headers: {
+              Authorization: 'Bearer ' + data.access_token
+            },
+            success: function(res) {
+              me = res;
+              if (res.images.length >= 1) {
+                $('.user-icon').fadeOut(function() {
+                  $('.user-icon').attr('src', res.images[0].url).fadeIn();
+                });
+              }
+            }
+          });
         });
       }
     });
@@ -38,7 +45,7 @@ $(document).ready(function() {
     });
 
     var csrf = window.localStorage.getItem('csrf') !== null ? window.localStorage.getItem('csrf') : query.csrf;
-    var spotify = new Spotify(csrf);
+    spotify = new Spotify(csrf);
     spotify.ready(function(err) {
       if (err) {
         console.log(err);
@@ -73,11 +80,11 @@ $(document).ready(function() {
   }
 
   $('#csrf').on('paste keyup', function(e) {
-    if (e.keyCode === 8) {
+    if (e.keyCode === 8 || $('#csrf').val() === '') {
       return;
     }
     var csrf = $('#csrf').val();
-    var spotify = new Spotify(csrf);
+    spotify = new Spotify(csrf);
     spotify.ready(function(err) {
       if (err) {
         console.log(err);
