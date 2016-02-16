@@ -17,11 +17,11 @@ var Spotify = function(csrf) {
       var options = {
         url: 'https://' + id() + 'spotilocal.com:' + port + path,
         error: function(xhr, status) {
-          cb(status);
+          if (cb) cb(status);
         },
         success: function(response) {
           var data = response;
-          cb(data);
+          if (cb) cb(data);
         }
       };
 
@@ -33,14 +33,14 @@ var Spotify = function(csrf) {
       req.onload = function() {
         if (req.status >= 200 && req.status < 400) {
           var data = JSON.parse(req.responseText);
-          cb(data);
+          if (cb) cb(data);
         } else {
-          cb('error');
+          if (cb) cb('error');
         }
       };
 
       req.onerror = function() {
-        cb('error');
+        if (cb) cb('error');
       };
 
       req.send();
@@ -61,7 +61,7 @@ var Spotify = function(csrf) {
         port += 1;
         ready(cb);
       } else if (response === 'error' && port >= 4380) {
-        cb("Spotify application is not running or doesn't support the internal web server.");
+        if (cb) cb("Spotify application is not running or doesn't support the internal web server.");
       } else {
 
         if (jquery) {
@@ -72,7 +72,7 @@ var Spotify = function(csrf) {
               token = response.t;
               request('/remote/status.json?csrf=' + csrf + '&oauth=' + token, function(response) {
                 if (typeof response.error !== 'undefined' && response.error.type === "4107") {
-                  cb('invalid CSRF token');
+                  if (cb) cb('invalid CSRF token');
                 } else {
                   if (cb) cb();
                   done = true;
@@ -90,19 +90,19 @@ var Spotify = function(csrf) {
               token = data.t;
               request('/remote/status.json?csrf=' + csrf + '&oauth=' + token, function(response) {
                 if (typeof response.error !== 'undefined' && response.error.type === "4107") {
-                  cb('invalid CSRF token');
+                  if (cb) cb('invalid CSRF token');
                 } else {
                   if (cb) cb();
                   done = true;
                 }
               });
             } else {
-              cb('error');
+              if (cb) cb('error');
             }
           };
 
           req.onerror = function() {
-            cb('error');
+            if (cb) cb('error');
           };
 
           req.send();
@@ -114,16 +114,16 @@ var Spotify = function(csrf) {
 
   this.status = function status(cb) {
     request('/remote/status.json?csrf=' + csrf + '&oauth=' + token, function(response) {
-      cb(response);
+      if (cb) cb(response);
     });
   };
 
   this.play = function play(uri, cb) {
     if (!uri || typeof uri !== 'string') {
-      cb(new Error('uri is needed in order to play song.'));
+      if (cb) cb(new Error('uri is needed in order to play song.'));
     } else {
       request('/remote/play.json?csrf=' + csrf + '&oauth=' + token + '&uri=' + uri, function(response) {
-        cb(response);
+        if (cb) cb(response);
       });
     }
   };
@@ -131,14 +131,14 @@ var Spotify = function(csrf) {
   this.toggle = function toggle(cb) {
     this.status(function(data) {
       request('/remote/pause.json?csrf=' + csrf + '&oauth=' + token + '&pause=' + data.playing, function(response) {
-        cb(response);
+        if (cb) cb(response);
       });
     });
   };
 
   this.pause = function pause(cb) {
     request('/remote/pause.json?csrf=' + csrf + '&oauth=' + token + '&pause=true', function(response) {
-      cb(response);
+      if (cb) cb(response);
     });
   };
 };
