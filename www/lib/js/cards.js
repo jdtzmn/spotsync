@@ -1,28 +1,13 @@
+var prev;
 var cards = {
   show: function(instant, data, cb) {
     if (typeof instant === 'function') cb = instant;
     if (typeof data === 'function') cb = data;
-    if (data === null || data.length === 0) {
-        if ($('.nav-link.friends').hasClass('active')) {
-          return $('.no-users').find('h1').text('No friends are currently streaming').parent().fadeIn();
-        } else {
-          return $('.no-users').find('h1').text('No users are currently streaming').parent().fadeIn();
-        }
-    } else {
-      if ($('.no-users').is(':visible')) {
-        return $('.no-users').fadeOut(function() {
-          cards.show(instant, data, cb);
-        });
-      }
-    }
 
     if (data && typeof data !== 'function') {
       var directives = {
         id: {
           text: function(params) {
-            if (this.display_name === null) {
-              $(params.element).css('margin-bottom', '29px');
-            }
             return this.id;
           }
         },
@@ -49,10 +34,39 @@ var cards = {
         }
       };
 
-      $('.users').render(data, directives);
+      if (!_.isEqual(prev, data)) {
+        if (!instant) {
+          cards.hide(false, function() {
+            if (data === null || data.length === 0) {
+              if ($('.nav-link.friends').hasClass('active')) {
+                return $('.no-users').find('h1').text('No friends are currently streaming').parent().fadeIn();
+              } else {
+                return $('.no-users').find('h1').text('No users are currently streaming').parent().fadeIn();
+              }
+            } else {
+              $('.users').render(data, directives);
+              cards.hide(true);
+              animateTopRow();
+            }
+          });
+        } else {
+          cards.hide(true, function() {
+            if (data === null || data.length === 0) {
+              if ($('.nav-link.friends').hasClass('active')) {
+                return $('.no-users').find('h1').text('No friends are currently streaming').parent().show();
+              } else {
+                return $('.no-users').find('h1').text('No users are currently streaming').parent().show();
+              }
+            } else {
+              $('.users').render(data, directives);
+              $('.card').show();
+              $('.card').css('opacity', 1);
+            }
+          });
+        }
+        prev = data;
+      }
     }
-
-    if (instant) return $('.card').css('opacity', 1);
 
     $('img.card-img').hover(function(){
       socket.emit('status', $(this).parent().parent().attr('data-id'));
@@ -69,12 +83,37 @@ var cards = {
       }).css('opacity', 0);
     });
 
+    //img.icon click event to start listening to someone's stream:
+    $('img.icon').click(function() {
+      if ($('.stream-sm').hasClass('pulse')) {
+        alert("You can't listen to other streams while streaming!");
+      } else if (play.user_id !== '' && $(this).closest('div.user').prop('data-id') !== play.user_id) {
+        alert("You can't listen to two streams at once!");
+      } else {
+        var t = this;
+        if ($(this).closest('div.user').find('i.fa').hasClass('fa-play')) {
+          play.user($(this).closest('div.user').prop('data-id'), function(d) {
+            console.log(d);
+            $(t).closest('div.user').find('i.fa.fa-play:visible').fadeOut(function() {
+              $(this).removeClass('fa-play').addClass('fa-pause').fadeIn();
+            });
+          });
+        } else {
+          play.user();
+          $(t).closest('div.user').find('i.fa.fa-pause:visible').fadeOut(function() {
+            $(this).removeClass('fa-pause').addClass('fa-play').fadeIn();
+          });
+          spotify.pause();
+        }
+      }
+    });
+
     function animateTopRow() {
       $('.card').filter(function() {
         return $(this).offset().top == $('.card').filter(function() {
           return $(this).css('opacity') == '0';
         }).offset().top;
-      }).removeAttr('style').animateCss('flipInX');
+      }).removeAttr('style').fadeIn().animateCss('flipInX');
       if ($('.card').filter(function() {return $(this).css('opacity') == '0';}).length > 0) {
         setTimeout(function() {
           animateTopRow();
@@ -83,7 +122,6 @@ var cards = {
         if (cb) cb();
       }
     }
-    animateTopRow();
   },
   hide: function(instant, cb) {
     if (instant) {

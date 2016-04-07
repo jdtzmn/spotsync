@@ -36,7 +36,7 @@ gulp.task('serve', function() {
 	gulp.watch(['www/lib/css/**/*.css', 'www/lib/js/**/*.js', 'www/**/*.html'], function(file) {
 		setTimeout(function() {
 			server.notify.apply(server, [file]);
-		}, 500);
+		}, 1000);
 	});
 
 	gulp.watch('index.js', function() {

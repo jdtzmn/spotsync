@@ -117,16 +117,17 @@ io.on('connection', function(socket) {
       }
     }
     if (!cb) socket.emit('status', usrs);
-
     var obj = {};
-    console.log(data);
-    console.log(users);
-    for (i in data) {
+    for (ii in data) {
       for (ii in users) {
         if (users[ii].socket_id === data[i]) {
           obj[users[ii].socket_id] = false;
-          io.sockets.connected[users[ii].socket_id].emit('update', function(data) {
-            obj[users[ii].socket_id] = true;
+          io.sockets.connected[users[ii].socket_id].emit('update', function(id) {
+            if (typeof id === 'object') {
+              if (cb) cb([id]);
+              return;
+            }
+            obj[id] = true;
           });
         }
       }
@@ -135,11 +136,9 @@ io.on('connection', function(socket) {
     var count = 0;
     var interval = setInterval(function() {
       count += 1;
-      if (count >= 10) {
+      if (count >= 5) {
         clearInterval(interval);
       }
-      console.log(obj);
-      console.log(count);
       for (i in obj) {
         if (!obj[i]) return;
       }

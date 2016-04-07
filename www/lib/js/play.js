@@ -1,19 +1,78 @@
+var interval;
+var amountOff = new Average();
 var play = {
-  format: function(num) {
-    return Math.floor(num / 60) + ':' + '0'.substring(0, 2 - JSON.stringify(num % 60).length) + num % 60;
+  user_id: '',
+  format: function(num, from, round) {
+    if (from) {
+      var dif = (play.time() - from) / 1000;
+      num += dif;
+      if (round === 'ceil') num = Math.ceil(num);
+      if (round === 'round') num = Math.round(num);
+      if (round === 'floor') num = Math.floor(num);
+      return Math.floor(num / 60) + ':' + '0'.substring(0, 2 - JSON.stringify(num % 60).split('.')[0].length) + num % 60;
+    } else {
+      return Math.floor(num / 60) + ':' + '0'.substring(0, 2 - JSON.stringify(num % 60).split('.')[0].length) + num % 60;
+    }
   },
   time: function() {
     return new Date().getTime();
   },
-  user: function(id) {
-    socket.emit('status', id, function(status) {
-      console.log(status);
+  user: function(id, cb) {
+    if (!id) {
+      play.user_id = '';
+      return;
+    }
+    socket.emit('status', id, function(d) {
+      play.user_id = d[0].socket_id;
+      var delay = Math.abs(1000 - amountOff.average(5) * 1000 - +(d[0].playing_position + ((play.time() - d[0].from) / 1000)) % 1 * 1000);
+      setTimeout(function() {
+        spotify.play(d[0].track.uri, play.format(d[0].playing_position, d[0].from, 'floor'), function(d) {
+          if (cb) spotify.status(function(d) {
+            cb(d);
+          });
+          spotify.on('play', 2, function(d) {
+            socket.emit('status', id, function(d) {
+              play.playing(d[0].track.uri, d[0].playing_position, d[0].from, function(playing) {
+                if (!playing) {
+                  spotify.on('play');
+                  play.user(play.user_id, cb);
+                }
+              });
+            });
+          });
+        });
+      }, delay);
     });
   },
-  track: function(id, from, cb) {
-
+  track: function(id, position, cb) {
+    var delay = Math.abs(1000 - amountOff.average(5) * 1000 - +(position).toString().split('.')[(position).toString().split('.').length - 1]);
+    setTimeout(function() {
+      spotify.on('login,logout,play,pause,ap', function(d) {
+        play.playing(id, position, play.time());
+        spotify.on('login,logout,play,pause,ap');
+      });
+      spotify.play(id, play.format(position, play.time(), 'floor'), function(d) {
+        if (cb) spotify.status(function(d) {
+          cb(d);
+        });
+      });
+    }, delay);
   },
-  playing: function(id, from) {
-
+  playing: function(id, position, from, cb) {
+    spotify.status(function(data) {
+      if (data.playing === false) {
+        if (cb) return cb(false);
+      }
+      console.log(position + (play.time() - from) / 1000);
+      console.log(data.playing_position);
+      console.log(Math.abs(data.playing_position - (position + (play.time() - from) / 1000) + 1));
+      amountOff.add(2 * Math.abs(data.playing_position - (position + (play.time() - from) / 1000) + 1));
+      console.log(amountOff.average(5));
+      if (data.track.track_resource.uri === id && Math.abs(data.playing_position - (position + (play.time() - from) / 1000)) < 0.1) {
+        if (cb) cb(true);
+      } else {
+        if (cb) cb(false);
+      }
+    });
   }
 };

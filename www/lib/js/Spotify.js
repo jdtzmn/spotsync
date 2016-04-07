@@ -70,8 +70,11 @@ var Spotify = function(csrf) {
             method: 'GET',
             success: function(response) {
               token = response.t;
-              request('/remote/status.json?csrf=' + csrf + '&oauth=' + token, function(response) {
-                if (typeof response.error !== 'undefined' && response.error.type === "4107") {
+              request('/remote/status.json?csrf=' + csrf + '&oauth=' + token + '&returnon=login%2Clogout%2Cplay%2Cpause%2Cerror%2Cap&returnafter=1', function(response) {
+                if (typeof response.error !== 'undefined' && response.error.type === '4107') {
+                  port += 1;
+                  ready(cb);
+                } else if (typeof response.error !== 'undefined' && response.error.type === '4107' && port >= 4380) {
                   if (cb) cb('invalid CSRF token');
                 } else {
                   if (cb) cb();
@@ -112,17 +115,30 @@ var Spotify = function(csrf) {
     });
   };
 
-  this.status = function status(cb) {
-    request('/remote/status.json?csrf=' + csrf + '&oauth=' + token, function(response) {
+  this.status = function status(returnon, returnafter, cb) {
+    if (typeof returnon === 'function') {
+      cb = returnon;
+      returnon = undefined;
+    }
+    if (typeof returnafter === 'function') {
+      cb = returnafter;
+      returnafter = undefined;
+    }
+    request('/remote/status.json?csrf=' + csrf + '&oauth=' + token + (returnon ? '&returnon=' + returnon : '') + (returnafter ? '&returnafter=' + returnafter : ''), function(response) {
       if (cb) cb(response);
     });
   };
 
-  this.play = function play(uri, cb) {
+  this.play = function play(uri, time, cb) {
     if (!uri || typeof uri !== 'string') {
-      if (cb) cb(new Error('uri is needed in order to play song.'));
+      request('/remote/pause.json?csrf=' + csrf + '&oauth=' + token + '&pause=false', function(response) {
+        if (cb || typeof uri === 'function') {
+          cb = uri;
+          cb(response);
+        }
+      });
     } else {
-      request('/remote/play.json?csrf=' + csrf + '&oauth=' + token + '&uri=' + uri, function(response) {
+      request('/remote/play.json?csrf=' + csrf + '&oauth=' + token + '&uri=' + encodeURIComponent(uri + (time ? '#' + time : '')), function(response) {
         if (cb) cb(response);
       });
     }
@@ -139,6 +155,26 @@ var Spotify = function(csrf) {
   this.pause = function pause(cb) {
     request('/remote/pause.json?csrf=' + csrf + '&oauth=' + token + '&pause=true', function(response) {
       if (cb) cb(response);
+    });
+  };
+
+  var cbs = {};
+  this.on = function on(returnon, returnafter, cb) {
+    var leaving = false;
+    window.onbeforeunload = function(){
+      leaving = true;
+    };
+    if (typeof returnafter === 'function') {
+      cb = returnafter;
+      returnafter = undefined;
+    }
+    if (cb) cbs[returnon] = cb;
+    if (!cb) delete cbs[returnon];
+    request('/remote/status.json?csrf=' + csrf + '&oauth=' + token + '&returnon=' + returnon + (returnafter ? '&returnafter=' + returnafter : '&returnafter=0'), function(response) {
+      if (cbs[returnon] && !leaving) {
+        cbs[returnon](response);
+        on(returnon, returnafter, cbs[returnon]);
+      }
     });
   };
 };

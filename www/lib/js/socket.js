@@ -1,9 +1,17 @@
+var usrs = [];
 var socket = function(access_token, cb) {
   socket = io('/', { query: 'access_token=' + access_token});
+  cards.hide(true);
+
+  //open previous open tab:
+  if (window.sessionStorage.getItem('tab') !== null) {
+    $('.nav-link.' + window.sessionStorage.getItem('tab')).click();
+  }
   socket.emit('users');
 
   socket.on('users', function(users) {
     if (!users) return socket.emit('users');
+    usrs = users;
     if ($('img.icon').filter(function() { return $(this).is(":hover"); }).length === 0) {
       if ($('.nav-link.friends').hasClass('active') && users.length > 0) {
         var ids = '';
@@ -24,20 +32,17 @@ var socket = function(access_token, cb) {
                 usrs.push(arr[i - users.length]);
               }
             }
-            cards.hide(false, function() {
-              cards.show(false, usrs);
-            });
+            $("html, body").stop().animate({scrollTop:0}, '500', 'swing');
+            cards.show(false, usrs);
           },
           error: function(xhr, textStatus, err) {
-            cards.hide(false, function() {
-              cards.show(false, []);
-            });
+            $("html, body").stop().animate({scrollTop:0}, '500', 'swing');
+            cards.show(false, []);
           }
         });
       } else {
-        cards.hide(false, function() {
-          cards.show(false, users);
-        });
+        $("html, body").stop().animate({scrollTop:0}, '500', 'swing');
+        cards.show(false, users);
       }
     }
   });
@@ -57,15 +62,13 @@ var socket = function(access_token, cb) {
       spotify.status(function(data) {
         data.from = play.time();
         socket.emit('update', data);
-        if (cb) cb();
+        if (cb) cb('/#' + socket.id);
       });
     }
   });
 
   socket.on('connection', function(user) {
-    setTimeout(function() {
-      socket.emit('users');
-    }, 1000);
+    socket.emit('users');
   });
 
   socket.on('disconnect', function() {

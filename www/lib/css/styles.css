@@ -10,6 +10,10 @@ label.form-control-label {
   color: white;
 }
 
+input#csrf {
+  max-width: 325px;
+}
+
 div.form-group.has-error > label.form-control-label {
   color: #d9534f;
 }
@@ -18,6 +22,10 @@ div.csrf {
   padding-top: 30vh;
   max-width: 450px;
   margin: 0 auto;
+}
+
+button.csrftut {
+  float: right;
 }
 
 div.user {
@@ -108,6 +116,10 @@ button.user-dropdown-toggle {
   outline: none;
 }
 
+a.logout {
+  cursor: pointer;
+}
+
 .dropdown-toggle.user-dropdown-toggle:after {
   display: none;
 }
@@ -118,6 +130,14 @@ button.user-dropdown-toggle {
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   animation-direction: alternate;
+}
+
+h6.display_name:empty {
+  margin-bottom: 29px;
+}
+
+code {
+  overflow: hidden;
 }
 
 @keyframes pulse {
