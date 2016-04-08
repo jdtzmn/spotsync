@@ -30,11 +30,11 @@ var play = {
           if (cb) spotify.status(function(d) {
             cb(d);
           });
-          spotify.on('play', 2, function(d) {
+          spotify.on('login,logout,play,pause,ap', 3, function(d) {
             socket.emit('status', id, function(d) {
               play.playing(d[0].track.uri, d[0].playing_position, d[0].from, function(playing) {
                 if (!playing) {
-                  spotify.on('play');
+                  spotify.on('login,logout,play,pause,ap');
                   play.user(play.user_id, cb);
                 }
               });
@@ -63,12 +63,12 @@ var play = {
       if (data.playing === false) {
         if (cb) return cb(false);
       }
-      console.log(position + (play.time() - from) / 1000);
-      console.log(data.playing_position);
-      console.log(Math.abs(data.playing_position - (position + (play.time() - from) / 1000) + 1));
-      amountOff.add(2 * Math.abs(data.playing_position - (position + (play.time() - from) / 1000) + 1));
-      console.log(amountOff.average(5));
-      if (data.track.track_resource.uri === id && Math.abs(data.playing_position - (position + (play.time() - from) / 1000)) < 0.1) {
+      console.log('streamer time: ' + position + (play.time() - from) / 1000);
+      console.log('user time: ' + data.playing_position);
+      console.log('amount off: ' + Math.abs(data.playing_position - ((position + (play.time() - from) / 1000) - 1)));
+      amountOff.add(2 * Math.abs(data.playing_position - ((position + (play.time() - from) / 1000) - 1)));
+      console.log('average amount off: ' + amountOff.average(5));
+      if (data.track.track_resource.uri === id && Math.abs(data.playing_position - ((position + (play.time() - from) / 1000) - 1)) < 0.05) {
         if (cb) cb(true);
       } else {
         if (cb) cb(false);
