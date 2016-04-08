@@ -4,21 +4,21 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
 var request = require('request');
-var secrets = require('./secrets.js');
+var fs = require('fs');
+var port = process.env.PORT ? process.env.PORT : 3000;
+var secrets = {};
+fs.readFile('./secrets.js', function(err, data) {
+  if (err) {
+    secrets = {
+      spotify_id: process.env.SPOTIFY_ID,
+      spotify_secret: process.env.SPOTIFY_SECRET
+    };
+  } else {
+    secrets = data;
+  }
+});
 
 app.use(express.static(__dirname + '/www/dist'));
-
-console.log('Listening on port: 3000');
-
-function room() {
-  var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for( var i=0; i < 5; i++ )
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return text;
-}
 
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/www/index.html');
@@ -185,4 +185,5 @@ io.on('connection', function(socket) {
   });
 });
 
-server.listen(3000);
+server.listen(port);
+console.log('Listening on port: ' + port);
