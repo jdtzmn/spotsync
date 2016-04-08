@@ -27,7 +27,7 @@ app.get('/', function(req, res) {
 app.get('/login', function(req, res) {
   res.redirect('https://accounts.spotify.com/authorize?response_type=code&show_dialog=true&client_id=' +
   secrets.spotify_id +
-  '&scope=' + encodeURIComponent('user-follow-read') + '&redirect_uri=' + encodeURIComponent('https://streamwithspotify.herokuapp.com:3000'));
+  '&scope=' + encodeURIComponent('user-follow-read') + '&redirect_uri=' + encodeURIComponent('https://streamwithspotsync.herokuapp.com:3000'));
 });
 
 app.get('/token', function(req, res) {
@@ -36,7 +36,7 @@ app.get('/token', function(req, res) {
     form: {
       grant_type: 'authorization_code',
       code: req.query.code,
-      redirect_uri: encodeURIComponent('https://streamwithspotify.herokuapp.com:3000')
+      redirect_uri: encodeURIComponent('https://streamwithspotsync.herokuapp.com:3000')
     },
     headers: {
       'Authorization': 'Basic ' + new Buffer(secrets.spotify_id + ':' + secrets.spotify_secret).toString('base64')
