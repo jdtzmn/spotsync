@@ -14,7 +14,7 @@ fs.readFile('./secrets.js', function(err, data) {
       spotify_secret: process.env.SPOTIFY_SECRET
     };
   } else {
-    secrets = data;
+    secrets = JSON.parse(data);
   }
 });
 
