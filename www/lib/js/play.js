@@ -44,19 +44,22 @@ var play = {
       }, delay);
     });
   },
-  track: function(id, position, cb) {
-    var delay = Math.abs(1000 - amountOff.average(5) * 1000 - +(position).toString().split('.')[(position).toString().split('.').length - 1]);
+  track: function(uri, position, cb) {
+    var timeoutDelay = (position % 1) * 1000;
     setTimeout(function() {
-      spotify.on('login,logout,play,pause,ap', function(d) {
-        play.playing(id, position, play.time());
-        spotify.on('login,logout,play,pause,ap');
+      var timer = play.time();
+      spotify.play(uri, play.format(position, play.time(), 'ceil'), function(res) {
+        var playDelay = (play.time() - timer) / 1000;
+        var dif = ((play.time() + playDelay) - (timer + timeoutDelay)) / 1000;
+        position += dif;
+        timeoutDelay = (position % 1) * 1000;
+        setTimeout(function() {
+          spotify.play(uri, play.format(position + playDelay, play.time(), 'ceil'), function(res) {
+            if (cb) cb(res);
+          });
+        }, timeoutDelay);
       });
-      spotify.play(id, play.format(position, play.time(), 'floor'), function(d) {
-        if (cb) spotify.status(function(d) {
-          cb(d);
-        });
-      });
-    }, delay);
+    }, timeoutDelay);
   },
   playing: function(id, position, from, cb) {
     spotify.status(function(data) {
