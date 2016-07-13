@@ -45,16 +45,21 @@ var play = {
     });
   },
   track: function(uri, position, cb) {
-    var timeoutDelay = (position % 1) * 1000;
+    var from = play.time();
+    var timeoutDelay = 1000 - (position % 1) * 1000;
+    console.log(timeoutDelay);
+    //  timeoutDelay = a second - the ms left till the next full second in the song
     setTimeout(function() {
       var timer = play.time();
-      spotify.play(uri, play.format(position, play.time(), 'ceil'), function(res) {
+      spotify.play(uri, play.format(Math.ceil(position)), function(res) {
         var playDelay = (play.time() - timer) / 1000;
-        var dif = ((play.time() + playDelay) - (timer + timeoutDelay)) / 1000;
-        position += dif;
-        timeoutDelay = (position % 1) * 1000;
+        console.log(playDelay);
+        var dif = (play.time() - from) / 1000;
+        console.log(dif);
+        position += dif + playDelay;
+        timeoutDelay = 1000 - (position % 1) * 1000;
         setTimeout(function() {
-          spotify.play(uri, play.format(position + playDelay, play.time(), 'ceil'), function(res) {
+          spotify.play(uri, play.format(Math.ceil(position)), function(res) {
             if (cb) cb(res);
           });
         }, timeoutDelay);
