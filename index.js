@@ -24,6 +24,14 @@ app.get('/', function(req, res) {
   res.sendFile(__dirname + '/www/index.html');
 });
 
+app.get('/oauthtoken', function(req, res) {
+  request('https://open.spotify.com/token', function(err, response, body) {
+    if (!err && response.statusCode == 200) {
+      res.send(body);
+    }
+  });
+})
+
 app.get('/login', function(req, res) {
   res.redirect('https://accounts.spotify.com/authorize?response_type=code&show_dialog=true&client_id=' +
   secrets.spotify_id +

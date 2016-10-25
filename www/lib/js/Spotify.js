@@ -66,9 +66,10 @@ var Spotify = function(csrf) {
 
         if (jquery) {
           $.ajax({
-            url: 'https://jsonp.afeld.me/?url=https://open.spotify.com/token',
+            url: '/oauthtoken',
             method: 'GET',
             success: function(response) {
+              if (typeof response === 'string') response = JSON.parse(response);
               token = response.t;
               request('/remote/status.json?csrf=' + csrf + '&oauth=' + token + '&returnon=login%2Clogout%2Cplay%2Cpause%2Cerror%2Cap&returnafter=1', function(response) {
                 if (typeof response.error !== 'undefined' && response.error.type === '4107') {
@@ -85,7 +86,7 @@ var Spotify = function(csrf) {
           });
         } else {
           var req = new XMLHttpRequest();
-          req.open('GET', 'https://jsonp.afeld.me/?url=https://open.spotify.com/token', true);
+          req.open('GET', '/oauthtoken', true);
 
           req.onload = function() {
             if (req.status >= 200 && req.status < 400) {
