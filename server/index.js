@@ -1,199 +1,96 @@
-const app = require('express')()
+const path = require('path')
+const express = require('express')
+const app = express()
 const server = require('http').Server(app)
-const io = require('socket.io')(server)
 const cookieParser = require('cookie-parser')
-const { URL } = require('url')
-const request = require('request')
 
-// define middlewares
-app.use(cookieParser())
+// security middleware
+const RateLimit = require('express-rate-limit')
+const helmet = require('helmet')
+const csrf = require('csurf')
 
-// spotify id and secret
-const clientId = process.env.SPOTIFY_CLIENT_ID
-const clientSecret = process.env.SPOTIFY_CLIENT_SECRET
+// ================================
+// ------------ TOKENS ------------
+// ================================
+let tokens = {}
+try {
+  tokens = require('./secrets.js')
+} catch (e) {
+  const {
+    SPOTIFY_CLIENT_ID,
+    SPOTIFY_CLIENT_SECRET,
+    COOKIES_SECRET
+  } = process.env
 
-// --------------------------------
-// ------------- LOGIN ------------
-// --------------------------------
-
-app.get('/auth/login', (req, res) => {
-  const authURL = new URL('https://accounts.spotify.com/authorize')
-  authURL.searchParams.append('client_id', clientId)
-  authURL.searchParams.append('response_type', 'code')
-
-  // generate scopes
-  const scopes = ['streaming', 'user-read-birthdate', 'user-read-email', 'user-read-private', 'user-read-playback-state', 'user-modify-playback-state']
-  authURL.searchParams.append('scope', scopes.join(' '))
-
-  // generate redirect_uri
-  let redirectURL = new URL(req.protocol + '://' + req.get('host'))
-  redirectURL.pathname = '/auth/callback'
-  authURL.searchParams.append('redirect_uri', redirectURL.toString())
-
-  // generate and set state token
-  let state = (Math.random().toString(36) + '00000000000000000').slice(2, 12)
-  res.cookie('spotify_state', state, {
-    expires: new Date(Date.now() + 1e4),
-    httpOnly: true
-  })
-  authURL.searchParams.append('state', state)
-
-  // redirect the request
-  res.redirect(authURL.toString())
-})
-
-// --------------------------------
-// ------- ACCEPT CALLBACK --------
-// --------------------------------
-app.get('/auth/callback', (req, res) => {
-  const responseURL = new URL(req.protocol + '://' + req.get('host'))
-  responseURL.pathname = '/'
-
-  const code = req.query.code
-  const state = req.query.state
-  const cookieState = req.cookies ? req.cookies['spotify_state'] : null
-
-  if (state && state === cookieState) {
-    const redirectURL = new URL(req.protocol + '://' + req.get('host'))
-    redirectURL.pathname = '/auth/callback'
-    const redirectURI = redirectURL.toString()
-
-    const config = {
-      url: 'https://accounts.spotify.com/api/token',
-      form: {
-        grant_type: 'authorization_code',
-        code: code,
-        redirect_uri: redirectURI
-      },
-      headers: {
-        Authorization: 'Basic ' + (new Buffer(clientId + ':' + clientSecret).toString('base64'))
-      },
-      json: true
-    }
-
-    request.post(config, (err, response, body) => {
-      if (err || response.statusCode !== 200) {
-        responseURL.searchParams.append('error', 'invalid_token')
-        res.redirect(responseURL.toString())
-      } else {
-        // set refresh token to expire in 2 weeks
-        const refreshToken = body.refresh_token
-        res.cookie('refresh_token', refreshToken, {
-          expires: new Date(Date.now() + 12096e5),
-          httpOnly: true
-        })
-
-        const accessToken = body.access_token
-
-        res.cookie('access_token', accessToken, {
-          expires: new Date(Date.now() + 36e5),
-          httpOnly: true
-        })
-        res.redirect(responseURL.toString())
-      }
-    })
-  } else {
-    responseURL.searchParams.append('error', 'state_mismatch')
-    res.redirect(responseURL.toString())
+  if (!SPOTIFY_CLIENT_ID || !SPOTIFY_CLIENT_SECRET || !COOKIES_SECRET) {
+    throw new Error('client_id, client_secret, and cookies_secret are required')
   }
+}
+
+const clientId = process.env.SPOTIFY_CLIENT_ID || tokens.client_id
+const clientSecret = process.env.SPOTIFY_CLIENT_SECRET || tokens.client_secret
+const cookieSecret = process.env.COOKIES_SECRET || tokens.cookies
+
+// ================================
+// ---------- MIDDLEWARE ----------
+// ================================
+app.use(helmet({
+  frameguard: { action: 'deny' }
+}))
+app.use(cookieParser(cookieSecret))
+app.use(express.static(path.join(__dirname, '../dist')))
+// enable csrf protection if in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(csrf({ cookie: true }))
+}
+
+// --------------------------------
+// -------- RATE LIMITING  --------
+// --------------------------------
+
+// enable reverse proxy if in production
+if (process.env.NODE_ENV === 'production') {
+  app.enable('trust proxy')
+}
+
+const limiter = new RateLimit({
+  windowMs: 10 * 60 * 1000, // 10 minutes
+  max: 100,
+  delayMs: 0
 })
 
-// --------------------------------
-// ---------- SEND TOKEN ----------
-// --------------------------------
+app.use(limiter)
 
-app.get('/auth/token', (req, res) => {
-  if (req.cookies && req.cookies['access_token']) {
-    res.send(req.cookies['access_token'])
-  } else {
-    res.sendStatus(404)
+// ================================
+// ------------ ROUTES ------------
+// ================================
+
+  // --------------------------------
+  // -------- AUTHENTICATION  -------
+  // --------------------------------
+const authRoutes = require('./auth.js')(clientId, clientSecret)
+app.use('/auth', authRoutes)
+
+  // --------------------------------
+  // ------- SERVE BUILT FILES ------
+  // --------------------------------
+
+app.get('*', (req, res) => {
+  if (req.csrfToken) {
+    res.cookie('XSRF-TOKEN', req.csrfToken())
   }
+  res.sendFile(path.join(__dirname, '../dist/index.html'))
 })
-
-// --------------------------------
-// --------- REFRESH TOKEN --------
-// --------------------------------
-
-app.get('/auth/refresh', (req, res) => {
-  const config = {
-    url: 'https://accounts.spotify.com/api/token',
-    form: {
-      grant_type: 'refresh_token',
-      refresh_token: req.query.token
-    },
-    headers: {
-      Authorization: 'Basic ' + (new Buffer(clientId + ':' + clientSecret).toString('base64'))
-    },
-    json: true
-  }
-
-  const responseURL = new URL(req.protocol + '://' + req.get('host'))
-  responseURL.pathname = '/login'
-
-  request.post(config, (err, response, body) => {
-    if (err || response.statusCode !== 200) {
-      responseURL.searchParams.append('error', 'invalid_token')
-      res.redirect(responseURL.toString())
-    } else {
-      const accessToken = body.access_token
-
-      res.cookie('access_token', accessToken, { httpOnly: true })
-      res.redirect(responseURL.toString())
-    }
-  })
-})
-
-// --------------------------------
-// ------------- LOGOUT -----------
-// --------------------------------
-
-app.get('/auth/logout', (req, res) => res.clearCookie('access_token').clearCookie('refresh_token').redirect('/'))
 
 // ================================
 // ---------- WEB SOCKETS ---------
 // ================================
 
-io.on('connection', (socket) => {
-  socket.on('stream', (room, cb) => {
-    const rooms = Object.keys(io.sockets.adapter.rooms)
+require('./sockets.js')(server, cookieSecret)
 
-    // test to see if room exists and formatted correctly
-    if (rooms.includes(room) || room.length === 0 || room.indexOf(' ') !== -1) {
-      delete socket.room
-      if (cb) cb(false)
-    } else {
-      // leave previous rooms
-      const socketRooms = Object.keys(socket.rooms).slice(1)
-      socketRooms.forEach(room => socket.leave(room))
-
-      // join new room
-      socket.join(room)
-      socket.room = room
-      if (cb) cb(true)
-    }
-  })
-
-  socket.on('update', status => io.sockets.in(socket.room).emit('update', status))
-
-  socket.on('listen', (room, cb) => {
-    const rooms = Object.keys(io.sockets.adapter.rooms)
-    // leave previous rooms
-    const socketRooms = Object.keys(socket.rooms).slice(1)
-    socketRooms.forEach(room => socket.leave(room))
-
-    // make sure room exists
-    if (rooms.includes(room)) {
-      // join new room
-      socket.join(room)
-      io.sockets.in(room).emit('request')
-
-      // callback successful
-      if (cb) cb(true)
-    } else {
-      // callback unsuccessful
-      if (cb) cb(false)
-    }
-  })
+// --------------------------------
+// ------------ LISTEN  -----------
+// --------------------------------
+server.listen(process.env.PORT || 3000, () => {
+  console.log('Listening on port:', server.address().port)
 })
-
-server.listen(3000)

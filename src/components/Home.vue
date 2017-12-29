@@ -1,9 +1,14 @@
 <template lang="pug">
   el-row(v-loading.fullscreen.lock='!this.device_id')
-    el-col(:lg='{ span: 10, offset: 7 }', :sm='{ span: 14, offset: 5 }', :xs='{ span: 22, offset: 1 }')
+    el-col(:lg='{ span: 10, offset: 7 }', :sm='{ span: 14, offset: 5 }', :xs='{ span: 24 }')
       h1.header Start streaming
       el-card.card
-        div(slot='header') Open Spotify
+        div(slot='header')
+          span Open Spotify
+          el-button.copy(
+            type='text',
+            @click="openSpotify('web')"
+          ) Open Web App
         el-button(type='success', @click='openSpotify').open
           icon.icon(name='spotify', scale='1.2')
           span.text Open Spotify
@@ -20,7 +25,7 @@
             v-clipboard:copy='url + room',
             v-clipboard:success='copySuccess'
           ) Copy to clipboard
-        span Share this link with friends so they can listen
+        span Share this link with friends so they can listen with you
         el-input(v-model='room', :id='roomInUse ? "invalid" : undefined').link
           template(slot='prepend') {{ url }}
 </template>
@@ -32,9 +37,12 @@ export default {
     return {
       room: Math.random().toString(36).substr(2, 5).toUpperCase(),
       url: window.location.origin + '/listen/',
+      lastChanged: Date.now(),
       roomInUse: false,
       accessToken: null,
       device_id: null,
+      player: null,
+      switchedToPlayer: false,
       spotify: null,
       state: null
     }
@@ -51,30 +59,45 @@ export default {
       const player = new window.Spotify.Player({
         name: 'Spotsync',
         getOAuthToken: cb => {
-          this.$axios.get('/auth/token')
+          this.$axios.post('/auth/token')
             .then(res => {
               this.createSpotifyInstance(res.data)
               cb(res.data)
             })
             .catch(err => {
               if (err.response.status === 404) {
-                this.$router.push('/login')
+                this.$router.push({ path: '/login', query: { origin: window.location.pathname } })
               }
             })
         }
       })
 
       // Error handling
-      player.on('initialization_error', e => console.error(e))
-      player.on('authentication_error', e => console.error(e))
-      player.on('account_error', e => console.error(e))
-      player.on('playback_error', e => console.error(e))
+      player.on('initialization_error', e => this.$message.error(e.message))
+      player.on('authentication_error', e => {
+        if (e.message === 'Authentication failed') {
+          window.location.replace('/auth/login?origin=' + window.location.pathname)
+        } else {
+          this.$message.error(e.message)
+        }
+      })
+      player.on('account_error', e => {
+        this.$alert('Spotify requires users to have premium.', 'Premium Required', {
+          type: 'error',
+          showClose: false,
+          showConfirmButton: false,
+          closeOnClickModal: false,
+          closeOnPressEscape: false
+        })
+      })
+      player.on('playback_error', e => this.$message.error(e.message))
 
       // Playback status updates
       player.on('player_state_changed', state => {
+        // emit the change
         state.timestamp = Date.now()
+        this.emitState(state)
         this.state = state
-        this.emitState()
       })
 
       // Ready
@@ -86,6 +109,7 @@ export default {
 
       // Connect to the player
       player.connect()
+      this.player = player
     },
     createSpotifyInstance (accessToken) {
       this.accessToken = accessToken
@@ -103,19 +127,18 @@ export default {
     },
     switchToPlayer () {
       let data = {
-        device_ids: [ this.device_id ]
+        device_ids: [ this.device_id ],
+        play: true
       }
 
       this.spotify.put('/me/player', data)
-        .then()
-        .catch((err) => {
-          if (err.response.status === 500) {
-            setTimeout(this.switchToPlayer, 3000)
-          }
-        })
     },
-    openSpotify () {
-      window.location.replace('spotify:')
+    openSpotify (type) {
+      if (type === 'web') {
+        window.open('https://open.spotify.com')
+      } else {
+        window.location.replace('spotify:')
+      }
     },
     playDemo () {
       this.spotify.put('/me/player/play?device_id=' + this.device_id, { uris: ['spotify:track:4RXpgGM7A4Hg7cFBoH5KyF'] })
@@ -123,17 +146,21 @@ export default {
     copySuccess () {
       this.$message.success('Link copied to clipboard')
     },
-    emitState () {
-      let state = this.state
+    emitState (state) {
+      // update state if given
+      state ? this.state = state : state = this.state
 
+      // define state to be shared with listeners
       let sharedState = {
         context: state.context,
+        paused: state.paused,
         // add difference to position
         position: state.position + (Date.now() - state.timestamp),
+        timestamp: Date.now(),
         track_window: state.track_window
       }
 
-      console.log(sharedState)
+      // send shared state
       this.$socket.emit('update', sharedState)
     }
   },
@@ -147,7 +174,23 @@ export default {
       this.setupStream()
     },
     request () {
-      this.emitState()
+      const startTime = Date.now()
+      this.player.getCurrentState().then((state) => {
+        state.position += Date.now() - startTime
+        setTimeout(() => this.player.seek(state.position + 1000), 1000)
+      })
+    },
+    toomanyrequests () {
+      this.$message.error('Too many requests. Please try again later.')
+    },
+    disconnect () {
+      this.$alert('You are temporarily suspended', 'Too many requests', {
+        type: 'error',
+        showClose: false,
+        showConfirmButton: false,
+        closeOnClickModal: false,
+        closeOnPressEscape: false
+      })
     }
   }
 }
@@ -156,11 +199,11 @@ export default {
 <style scoped>
 .header {
   color: white;
-  margin-top: 30px;
 }
 
 .card {
-  margin-top: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .icon {
