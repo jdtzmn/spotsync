@@ -125,9 +125,14 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+<<<<<<< HEAD
 # End of https://www.gitignore.io/api/node,macos,linux,windows
 
 # Custom
+=======
+*.min.js.map
+*.min.css.map
+>>>>>>> heroku
 
 /dist/
 server/secrets.js
