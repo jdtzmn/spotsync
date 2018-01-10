@@ -65,7 +65,7 @@ export default {
               cb(res.data)
             })
             .catch(err => {
-              if (err.response.status === 404) {
+              if (err.response.status === 404 || err.response.status === 403) {
                 this.$router.push({ path: '/login', query: { origin: window.location.pathname } })
               }
             })
