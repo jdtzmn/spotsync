@@ -1,0 +1,72 @@
+{
+  "name": "spotsync",
+  "version": "0.1.0",
+  "description": "🎵 Sync music like magic ✨",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "test": "jest --watch",
+    "test:unit": "jest",
+    "test:e2e": "start-server-and-test dev 3000 test:cypress",
+    "test:cypress": "cypress run",
+    "ci": "concurrently --kill-others-on-fail \"npm:test:*\"",
+    "lint": "concurrently \"npm:lint:*\"",
+    "lint:js": "eslint --ext .js --fix .",
+    "lint:scss": "stylelint **/*/scss"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add",
+      "jest --findRelatedTests"
+    ],
+    "*.scss": [
+      "stylelint"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jdtzmn/spotsync.git"
+  },
+  "author": "jdtzmn <jdtzmn@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/jdtzmn/spotsync/issues"
+  },
+  "homepage": "https://github.com/jdtzmn/spotsync#readme",
+  "dependencies": {
+    "@zeit/next-sass": "^1.0.1",
+    "next": "^7.0.2",
+    "node-sass": "^4.9.4",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2"
+  },
+  "devDependencies": {
+    "concurrently": "^4.0.1",
+    "cypress": "^3.1.0",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "eslint": "^5.7.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-loader": "^2.1.1",
+    "eslint-plugin-cypress": "^2.0.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "husky": "^1.1.2",
+    "jest": "^23.6.0",
+    "lint-staged": "^7.3.0",
+    "start-server-and-test": "^1.7.4",
+    "stylelint": "^9.6.0",
+    "stylelint-config-recommended-scss": "^3.2.0",
+    "stylelint-webpack-plugin": "^0.10.5"
+  }
+}

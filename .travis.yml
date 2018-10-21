@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - node
+sudo: required
+addons:
+  chrome: stable
+cache:
+  directories:
+    - ~/.cache
+jobs:
+  include:
+    - stage: Tests
+      name: Run All Tests
+      script:
+        - yarn ci
+        - yarn lint
