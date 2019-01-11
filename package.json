@@ -12,7 +12,7 @@
     "test:cypress": "cypress run",
     "ci": "concurrently --kill-others-on-fail \"npm:test:unit\" \"npm:test:e2e\"",
     "lint": "concurrently \"npm:lint:*\"",
-    "lint:js": "eslint --ext .js --fix .",
+    "lint:ts": "tslint -c tslint.json -p .",
     "lint:scss": "stylelint **/*/scss"
   },
   "husky": {

@@ -1,7 +1,28 @@
 {
   "extends": [
+    "tslint-react",
     "tslint-config-standard",
     "tslint-plugin-cypress",
-    "tslint-react"
-  ]
+    "tslint:recommended"
+  ],
+  "linterOptions": {
+    "format": "stylish"
+  },
+  "rules": {
+    "semicolon": false,
+    "quotemark": false,
+    "trailing-comma": false,
+    "object-literal-sort-keys": false,
+    "space-before-function-paren": false,
+    "ordered-imports": false,
+    "no-floating-promises": false,
+    "curly": false
+  },
+  "jsRules": {
+    "semicolon": false,
+    "quotemark": false,
+    "trailing-comma": false,
+    "object-literal-sort-keys": false,
+    "space-before-function-paren": false
+  }
 }

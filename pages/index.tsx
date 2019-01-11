@@ -1,9 +1,9 @@
-import React from 'react'
+import * as React from 'react'
 
-const index = () => {
+const Index = () => {
   return (
     <div/>
   )
 }
 
-export default index
+export default Index
