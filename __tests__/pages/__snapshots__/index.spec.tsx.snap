@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Index should render correctly 1`] = `
+<div>
+  <SideEffect(Head)>
+    <meta
+      content="initial-scale=1.0, width=device-width"
+      key="viewport"
+      name="viewport"
+    />
+  </SideEffect(Head)>
+  <img
+    alt=""
+    src=""
+  />
+  <div>
+    <Fade
+      bottom={true}
+    >
+      <h1>
+        Spotify in sync
+      </h1>
+    </Fade>
+    <Fade
+      bottom={true}
+      delay={100}
+    >
+      <sub>
+        Spotsync makes multi-device listening a breeze
+      </sub>
+    </Fade>
+  </div>
+  <div>
+    <Fade
+      bottom={true}
+      delay={175}
+    >
+      <button>
+        Get Started
+      </button>
+    </Fade>
+    <Fade
+      bottom={true}
+      delay={350}
+    >
+      <sub>
+        By logging in with Spotify
+      </sub>
+    </Fade>
+  </div>
+</div>
+`;

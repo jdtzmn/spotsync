@@ -1,0 +1,51 @@
+@import '../globals';
+@import '../buttons';
+
+.container {
+  // display
+  padding-top: 24pt;
+}
+
+.artwork {
+  // display
+  width: 100%;
+}
+
+.padding {
+  // display
+  padding: 24pt 14pt;
+}
+
+.subtitle {
+  @extend %title;
+  
+  // color
+  color: $darkgray;
+}
+
+.buttonGroup {
+  // display
+  padding: 0 14pt;
+}
+
+.getStarted {
+  @extend %button;
+  @extend %button1-font;
+
+  // display
+  width: 100%;
+  height: 40px;
+}
+
+.getStartedDescription {
+  @extend %paragraph;
+
+  // color
+  color: $gray;
+
+  // display
+  margin-top: 5px;
+
+  // font
+  text-align: center;
+}

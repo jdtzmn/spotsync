@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="320px" height="248px" viewBox="0 0 320 248" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>Artwork</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="96.3" height="187.25" rx="12.84"></rect>
+    </defs>
+    <g id="Mobile" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Welcome" transform="translate(0.000000, -101.000000)">
+            <g id="First-Container" transform="translate(0.000000, 101.000000)">
+                <g id="Artwork">
+                    <g id="iPhoneX/Dark" transform="translate(16.000000, 0.000000)" stroke="#161616">
+                        <rect id="Frame" stroke-width="4.5582" x="2.2791" y="2.2791" width="91.7418" height="182.6918" rx="18.19"></rect>
+                        <path d="M24.61,4.815 L72.76,4.815" id="Camera" stroke-width="7.49" stroke-linecap="round"></path>
+                        <path d="M26.215,178.155 L70.62,178.155" id="Bottom-Bar" stroke-width="1.07" stroke-linecap="round"></path>
+                    </g>
+                    <g id="GalaxyS8/Dark" transform="translate(208.000000, 60.000000)">
+                        <g id="Frame" stroke-width="1" fill-rule="evenodd">
+                            <rect id="Outer-frame" stroke="#161616" stroke-width="3.21" x="1.605" y="1.605" width="93.09" height="184.04" rx="12.84"></rect>
+                            <g id="Inner-margins">
+                                <mask id="mask-2" fill="white">
+                                    <use xlink:href="#path-1"></use>
+                                </mask>
+                                <rect stroke="#161616" stroke-width="2.14" x="1.07" y="1.07" width="94.16" height="185.11" rx="12.84"></rect>
+                                <rect id="Thicker-frame" stroke="#161616" stroke-width="17.12" mask="url(#mask-2)" x="-6.42" y="1.07" width="109.14" height="187.25" rx="12.84"></rect>
+                            </g>
+                        </g>
+                        <path d="M37.985,4.815 L59.385,4.815" id="Speaker-cutout" stroke="#B6B6B6" stroke-width="1.07" stroke-linecap="round"></path>
+                    </g>
+                    <g id="Soundwaves" transform="translate(0.000000, 43.000000)" stroke="#403EBE" stroke-width="1.5">
+                        <path d="M0,58.1417323 C56.6666667,26.1417323 105.666667,36.4750656 147,89.1417323 C209,168.141732 258,188.141732 320,123.141732" id="Green-wave"></path>
+                        <path d="M0,38.1417323 C56.6666667,6.14173228 105.666667,16.4750656 147,69.1417323 C209,148.141732 258,168.141732 320,103.141732" id="Yellow-wave"></path>
+                        <path d="M0,18.1417323 C56.6666667,-13.8582677 105.666667,-3.52493438 147,49.1417323 C209,128.141732 258,148.141732 320,83.1417323" id="Pink-wave"></path>
+                    </g>
+                    <g id="Covers" transform="translate(16.000000, 49.000000)" fill="#161616">
+                        <rect id="Left-Wave-Cover" x="0" y="0" width="4.5" height="45"></rect>
+                        <rect id="Right-Wave-Cover" x="192" y="99" width="3.2" height="46"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -6,7 +6,10 @@
     "tslint:recommended"
   ],
   "linterOptions": {
-    "format": "stylish"
+    "format": "stylish",
+    "exclude": [
+      "./dist/*"
+    ]
   },
   "rules": {
     "semicolon": false,
@@ -16,7 +19,8 @@
     "space-before-function-paren": false,
     "ordered-imports": false,
     "no-floating-promises": false,
-    "curly": false
+    "curly": false,
+    "jsx-boolean-value": false
   },
   "jsRules": {
     "semicolon": false,

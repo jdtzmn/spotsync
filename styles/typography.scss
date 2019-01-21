@@ -1,0 +1,70 @@
+@import './colors';
+
+// FONT FACES
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-weight: normal;
+  font-style: normal;
+	src: url('/static/fonts/SourceSansPro-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  src: url('/static/fonts/SourceSansPro-SemiBold.ttf');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  src: url('/static/fonts/SourceSansPro-Bold.ttf');
+  font-weight: bold;
+  font-style: normal;
+}
+
+// GLOBAL FONTS
+
+html, body {
+  // A snippet from https://css-tricks.com/snippets/css/system-font-stack/ :
+  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 7.5pt;
+  color: $black;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+sub {
+  display: block;
+}
+
+// DEFINED FONTS
+
+%hero {
+  font-weight: bold;
+  font-size: 3em;
+}
+
+%title {
+  font-size: 2em;
+}
+
+%paragraph {
+  font-size: 1.1em;
+}
+
+// CLASS FONTS
+
+.hero {
+  @extend %hero;
+}
+
+.title {
+  @extend %title;
+}
+
+.paragraph {
+  @extend %paragraph;
+}

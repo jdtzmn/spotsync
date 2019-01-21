@@ -1,0 +1,21 @@
+@import './colors';
+
+// BUTTON FONT
+
+%button1-font {
+  // color
+  color: $lightgray;
+
+  // font
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+%button {
+  // color
+  background: $primary;
+
+  // border
+  border: 0;
+  border-radius: 2px;
+}

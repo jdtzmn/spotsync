@@ -3,9 +3,10 @@ const path = require('path')
 
 const withTypescript = require('@zeit/next-typescript')
 const withSass = require('@zeit/next-sass')
+const withImages = require('next-images')
 const StyleLintPlugin = require('stylelint-webpack-plugin')
 
-module.exports = withTypescript(withSass({
+module.exports = withImages(withTypescript(withSass({
   cssModules: true,
   webpack (config, { isDev, isClient }) {
     // if development then add styling middleware to webpack
@@ -31,4 +32,4 @@ module.exports = withTypescript(withSass({
 
     return config
   }
-}))
+})))
