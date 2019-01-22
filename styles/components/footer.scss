@@ -1,0 +1,71 @@
+@import '../globals';
+
+.footerContainer {
+  // color
+  background: $black;
+
+  // display
+  padding-bottom: 0;
+}
+
+.flexContainer {
+  // display
+  display: flex;
+  padding: 32pt;
+}
+
+.footerSubContainer {
+  // flex
+  flex: 1;
+}
+
+.footerLink {
+  @extend %subtitle;
+
+  // display
+  display: block;
+  padding: 2pt;
+
+  // color
+  color: $lightgray;
+
+  // font
+  font-weight: 500;
+  text-decoration: none;
+}
+
+%footerTitle {
+  @extend %subtitle;
+
+  // font
+  font-weight: bold;
+}
+
+// SPOTSYNC container
+.spotsyncTitle {
+  @extend %footerTitle;
+
+  // color
+  color: $tertiary;
+}
+
+// SUPPORT container
+.supportTitle {
+  @extend %footerTitle;
+
+  // color
+  color: $warning;
+}
+
+// Copyright
+.copyright {
+  @extend %paragraph;
+  @extend %text-center;
+
+  // color
+  color: $gray;
+
+  // display
+  margin-top: 16pt;
+  padding: 8pt 0;
+}

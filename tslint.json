@@ -20,7 +20,8 @@
     "ordered-imports": false,
     "no-floating-promises": false,
     "curly": false,
-    "jsx-boolean-value": false
+    "jsx-boolean-value": false,
+    "member-access": false
   },
   "jsRules": {
     "semicolon": false,

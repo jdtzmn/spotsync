@@ -5,6 +5,7 @@ import Index from '../../pages/index'
 describe('Index', () => {
   let wrapper
   beforeEach(() => {
+    window.scrollTo = () => {/* mock scrollTo */}
     wrapper = shallow(<Index />)
   })
 

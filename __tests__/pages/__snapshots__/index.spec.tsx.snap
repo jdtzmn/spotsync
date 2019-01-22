@@ -9,44 +9,187 @@ exports[`Index should render correctly 1`] = `
       name="viewport"
     />
   </SideEffect(Head)>
-  <img
-    alt=""
-    src=""
-  />
+  <Fade>
+    <img
+      alt=""
+      src=""
+    />
+  </Fade>
+  <div>
+    <div>
+      <Fade
+        bottom={true}
+      >
+        <h1>
+          Spotify in sync
+        </h1>
+      </Fade>
+      <Fade
+        bottom={true}
+        delay={100}
+      >
+        <sub>
+          Spotsync makes multi-device listening a breeze
+        </sub>
+      </Fade>
+    </div>
+    <div>
+      <Fade
+        bottom={true}
+        delay={175}
+      >
+        <button>
+          Get Started
+        </button>
+      </Fade>
+      <Fade
+        bottom={true}
+        delay={350}
+      >
+        <sub>
+          By logging in with Spotify
+        </sub>
+      </Fade>
+    </div>
+  </div>
   <div>
     <Fade
       bottom={true}
     >
+      <img
+        alt=""
+        src=""
+      />
+    </Fade>
+    <div>
+      <Fade
+        bottom={true}
+        delay={400}
+      >
+        <h1>
+          Get the Party Started
+        </h1>
+      </Fade>
+      <Fade
+        bottom={true}
+        delay={600}
+      >
+        <sub>
+          Many ways to connect to the party
+        </sub>
+      </Fade>
+      <div
+        key="0"
+      >
+        <Fade
+          bottom={true}
+          delay={400}
+        >
+          <h2>
+            1
+          </h2>
+          <h2>
+            Share the party over sound
+          </h2>
+          <h3>
+            Plays a sequence of notes from one member to another
+          </h3>
+        </Fade>
+      </div>
+      <div
+        key="1"
+      >
+        <Fade
+          bottom={true}
+          delay={400}
+        >
+          <h2>
+            2
+          </h2>
+          <h2>
+            Scan a QR code
+          </h2>
+          <h3>
+            Scan a QR code to instantly connect
+          </h3>
+        </Fade>
+      </div>
+      <div
+        key="2"
+      >
+        <Fade
+          bottom={true}
+          delay={400}
+        >
+          <h2>
+            3
+          </h2>
+          <h2>
+            Enter a code
+          </h2>
+          <h3>
+            It's as easy as that
+          </h3>
+        </Fade>
+      </div>
+    </div>
+  </div>
+  <div>
+    <Fade
+      bottom={true}
+    >
+      <img
+        alt=""
+        src=""
+      />
+    </Fade>
+    <Fade
+      bottom={true}
+      delay={400}
+    >
       <h1>
-        Spotify in sync
+        Every person can add songs to the queue
       </h1>
     </Fade>
     <Fade
       bottom={true}
-      delay={100}
+      delay={400}
     >
       <sub>
-        Spotsync makes multi-device listening a breeze
+        The songs will keep on playing
       </sub>
     </Fade>
   </div>
   <div>
     <Fade
       bottom={true}
-      delay={175}
+      delay={200}
+    >
+      <h1>
+        Ready to Go?
+      </h1>
+    </Fade>
+    <Fade
+      bottom={true}
+      delay={300}
     >
       <button>
-        Get Started
+        Start a Party
       </button>
     </Fade>
     <Fade
       bottom={true}
       delay={350}
     >
-      <sub>
-        By logging in with Spotify
-      </sub>
+      <Tada
+        delay={1000}
+      >
+        <sub>
+          (It's free)
+        </sub>
+      </Tada>
     </Fade>
   </div>
+  <Footer />
 </div>
 `;

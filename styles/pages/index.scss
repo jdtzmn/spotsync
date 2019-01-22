@@ -6,6 +6,8 @@
   padding-top: 24pt;
 }
 
+// --- FIRST CONTAINER ---
+
 .artwork {
   // display
   width: 100%;
@@ -34,18 +36,138 @@
 
   // display
   width: 100%;
-  height: 40px;
+  height: 44px;
 }
 
 .getStartedDescription {
   @extend %paragraph;
+  @extend %text-center;
 
   // color
   color: $gray;
 
   // display
-  margin-top: 5px;
+  padding: 8pt 0 24pt 0;
+}
+
+// --- SECOND CONTAINER ---
+%container-padding {
+  // display
+  padding: 48pt 14pt;
+}
+.secondContainer {
+  @extend %container-padding;
+
+  // color
+  background: $lightgray;
+}
+
+.partySvg {
+  // display
+  display: block;
+  margin: 0 auto;
+}
+
+.partyGroup {
+  // display
+  padding-top: 48pt;
+}
+
+.partyTitle {
+  @extend %hero;
+  @extend %text-center;
+}
+
+.partySubtitle {
+  @extend %title;
+  @extend %text-center;
+  
+  // color
+  color: $darkgray;
+}
+
+.stepNumber {
+  @extend %text-center;
+
+  // color
+  color: $gray;
 
   // font
-  text-align: center;
+  font-size: 2.2em;
+
+  // display
+  padding-top: 16pt;
+  padding-bottom: 8pt;
+}
+
+.stepTitle {
+  @extend %title;
+  @extend %text-center;
+
+  // font
+  font-size: 2.2em;
+  font-weight: 500;
+}
+
+.stepDescription {
+  @extend %paragraph;
+  @extend %text-center;
+
+  // color
+  color: $darkgray;
+}
+
+// --- THIRD CONTAINER ---
+.thirdContainer {
+  @extend %container-padding;
+
+  // color
+  background: $primary;  
+}
+
+.addSongGif {
+  // display
+  display: block;
+  width: calc(100% - 2 * 48px);
+  margin: 0 auto;
+
+  // shadow
+  box-shadow: 0 10pt 11pt rgba(77, 77, 77, 40);
+}
+
+.whiteTitle {
+  @extend %hero;
+  @extend %text-center;
+
+  // color
+  color: $white;
+
+  // display
+  padding-top: 48pt;
+}
+
+.whiteDescription {
+  @extend %title;
+  @extend %text-center;
+
+  // color
+  color: $white;
+
+  // display
+  padding: 24pt 0;
+
+  // font
+  font-size: 2.2em;
+}
+
+// --- FOURTH CONTAINER ---
+.fourthContainer {
+  @extend %container-padding;
+}
+
+.convincingTitle {
+  @extend %hero;
+  @extend %text-center;
+
+  padding-bottom: 24pt;
 }
