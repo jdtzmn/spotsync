@@ -154,7 +154,7 @@ class Index extends React.Component {
       </div>
     )
   }
-  
+
 }
 
 export default Index

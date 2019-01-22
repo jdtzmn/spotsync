@@ -26,7 +26,7 @@ exports[`Index should render correctly 1`] = `
       </Fade>
       <Fade
         bottom={true}
-        delay={100}
+        delay={200}
       >
         <sub>
           Spotsync makes multi-device listening a breeze
@@ -36,7 +36,7 @@ exports[`Index should render correctly 1`] = `
     <div>
       <Fade
         bottom={true}
-        delay={175}
+        delay={300}
       >
         <button>
           Get Started

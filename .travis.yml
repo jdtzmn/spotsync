@@ -11,6 +11,8 @@ jobs:
   include:
     - stage: Tests
       name: Run All Tests
+      before_script:
+        - yarn build
       script:
         - yarn ci
         - yarn lint

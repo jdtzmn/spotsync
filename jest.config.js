@@ -5,6 +5,9 @@ module.exports = {
     "<rootDir>/server",
     "<rootDir>/__tests__"
   ],
+  "testPathIgnorePatterns": [
+    "<rootDir>/__tests__/setupEnzyme.ts" // ignore the setupEnzyme file in the __tests__ directory
+  ],
   "transform": {
     "^.+\\.tsx?$": "ts-jest"
   },
