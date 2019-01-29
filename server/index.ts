@@ -1,6 +1,9 @@
 import express from 'express'
 import { Server } from 'http'
 import next from 'next'
+import bodyParser from 'body-parser'
+
+import authRoutes from './auth'
 
 const port = parseInt(process.env.PORT, 10) || 3000
 const dev = process.env.NODE_ENV !== 'production'
@@ -13,9 +16,13 @@ nextApp.prepare()
     const server = new Server(app)
     // const io = require('socket.io')(server)
 
+    app.use(bodyParser.json())
+
     /* ==================== */
     /* ====== ROUTES ====== */
     /* ==================== */
+
+    app.use('/auth', authRoutes)
 
     app.get('*', (req, res) => {
       return handle(req, res)
