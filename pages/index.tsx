@@ -11,11 +11,9 @@ import addSongGif from '../static/index/add_song.gif'
 import Footer from '../components/Footer'
 
 class Index extends React.Component {
-  componentDidMount () {
-    // scroll to the top so that every reload starts at the top (no weird fading animations)
-    setTimeout(() => {
-      window.scrollTo(0, 0)
-    }, 20)
+  constructor (props) {
+    super(props)
+    this.loginWithSpotify = this.loginWithSpotify.bind(this)
   }
 
   render () {
@@ -76,7 +74,7 @@ class Index extends React.Component {
           </div>
           <div className={css.buttonGroup}>
             <Fade bottom delay={300}>
-              <button className={css.getStarted}>
+              <button className={css.getStarted} onClick={this.loginWithSpotify}>
                 Get Started
               </button>
             </Fade>
@@ -137,7 +135,7 @@ class Index extends React.Component {
             </h1>
           </Fade>
           <Fade bottom delay={300}>
-            <button className={css.getStarted}>
+            <button className={css.getStarted} onClick={this.loginWithSpotify}>
               Start a Party
             </button>
           </Fade>
@@ -155,6 +153,9 @@ class Index extends React.Component {
     )
   }
 
+  loginWithSpotify () {
+    window.location.replace('/auth/login')
+  }
 }
 
 export default Index

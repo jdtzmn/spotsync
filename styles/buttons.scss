@@ -18,4 +18,23 @@
   // border
   border: 0;
   border-radius: 2px;
+
+  // shadow
+  box-shadow: 0 1px 1px rgba($secondary, 0.5);
+
+  // transition
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+%button:active {
+  // border
+  background: $secondary;
+
+  // shadow
+  box-shadow: none;
+}
+
+%button:focus {
+  // outline
+  outline: none;
 }

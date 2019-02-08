@@ -53,7 +53,8 @@
     "node-sass": "^4.9.4",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
-    "react-reveal": "^1.2.2"
+    "react-reveal": "^1.2.2",
+    "socket.io": "^2.2.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
@@ -70,6 +71,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "husky": "^1.1.2",
     "jest": "^23.6.0",
+    "jest-runner-tslint": "^1.0.5",
     "lint-staged": "^7.3.0",
     "nodemon": "^1.18.9",
     "start-server-and-test": "^1.7.4",
@@ -79,6 +81,7 @@
     "stylelint-webpack-plugin": "^0.10.5",
     "ts-jest": "^23.10.5",
     "ts-node": "^7.0.1",
+    "tsconfig-paths-jest": "^0.0.1",
     "tslint": "^5.12.0",
     "tslint-config-standard": "^8.0.1",
     "tslint-plugin-cypress": "^1.0.4",

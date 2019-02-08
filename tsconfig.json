@@ -14,6 +14,11 @@
     "sourceMap": true,
     "skipLibCheck": true,
     "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "server/*": ["./server/*"],
+      "pages/*": ["./pages/*"]
+    },
     "typeRoots": [
       "./node_modules/@types"
     ],

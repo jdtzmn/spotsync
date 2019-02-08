@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Room should get the status with songs in the queue 1`] = `
+Array [
+  Object {
+    "artists": Array [
+      Object {
+        "id": "1vCWHaC5f2uS3yhpwWbIA6",
+        "name": "Avicii",
+      },
+    ],
+    "duration_ms": 255093,
+    "id": "4RXpgGM7A4Hg7cFBoH5KyF",
+    "name": "Hey Brother",
+  },
+]
+`;
+
+exports[`Room should get the status with songs in the queue 2`] = `Array []`;

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { shallow } from 'enzyme'
-import Index from '../../pages/index'
+import Index from 'pages/index'
 
 describe('Index', () => {
   let wrapper

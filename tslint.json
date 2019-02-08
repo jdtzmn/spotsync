@@ -21,7 +21,13 @@
     "no-floating-promises": false,
     "curly": false,
     "jsx-boolean-value": false,
-    "member-access": false
+    "member-access": false,
+    "interface-name": false,
+    "deprecation": false,
+    "await-promise": false,
+    "no-unnecessary-qualifier": false,
+    "no-unnecessary-type-assertion": false,
+    "strict-type-predicates": false
   },
   "jsRules": {
     "semicolon": false,

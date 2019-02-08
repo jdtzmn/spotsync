@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Spotify should return correct spotify track data on request 1`] = `
+Object {
+  "album": Object {
+    "album_type": "album",
+    "artists": Array [
+      Object {
+        "external_urls": Object {
+          "spotify": "https://open.spotify.com/artist/1dfeR4HaWDbWqFHLkxsg1d",
+        },
+        "href": "https://api.spotify.com/v1/artists/1dfeR4HaWDbWqFHLkxsg1d",
+        "id": "1dfeR4HaWDbWqFHLkxsg1d",
+        "name": "Queen",
+        "type": "artist",
+        "uri": "spotify:artist:1dfeR4HaWDbWqFHLkxsg1d",
+      },
+    ],
+    "available_markets": Array [
+      "CA",
+      "US",
+    ],
+    "external_urls": Object {
+      "spotify": "https://open.spotify.com/album/6X9k3hSsvQck2OfKYdBbXr",
+    },
+    "href": "https://api.spotify.com/v1/albums/6X9k3hSsvQck2OfKYdBbXr",
+    "id": "6X9k3hSsvQck2OfKYdBbXr",
+    "images": Array [
+      Object {
+        "height": 640,
+        "url": "https://i.scdn.co/image/f6e02ce8bc9e91afa0e220703072c20bf72c72c5",
+        "width": 640,
+      },
+      Object {
+        "height": 300,
+        "url": "https://i.scdn.co/image/f4111b2cd4d2459cfdf9aad9010d74c97b7e3a68",
+        "width": 300,
+      },
+      Object {
+        "height": 64,
+        "url": "https://i.scdn.co/image/8ea6edc8b88d8777c931bff14f48d70503de674c",
+        "width": 64,
+      },
+    ],
+    "name": "A Night At The Opera (Deluxe Remastered Version)",
+    "release_date": "1975-11-21",
+    "release_date_precision": "day",
+    "total_tracks": 18,
+    "type": "album",
+    "uri": "spotify:album:6X9k3hSsvQck2OfKYdBbXr",
+  },
+  "artists": Array [
+    Object {
+      "external_urls": Object {
+        "spotify": "https://open.spotify.com/artist/1dfeR4HaWDbWqFHLkxsg1d",
+      },
+      "href": "https://api.spotify.com/v1/artists/1dfeR4HaWDbWqFHLkxsg1d",
+      "id": "1dfeR4HaWDbWqFHLkxsg1d",
+      "name": "Queen",
+      "type": "artist",
+      "uri": "spotify:artist:1dfeR4HaWDbWqFHLkxsg1d",
+    },
+  ],
+  "available_markets": Array [
+    "CA",
+    "US",
+  ],
+  "disc_number": 1,
+  "duration_ms": 354320,
+  "explicit": false,
+  "external_ids": Object {
+    "isrc": "GBUM71029604",
+  },
+  "external_urls": Object {
+    "spotify": "https://open.spotify.com/track/7tFiyTwD0nx5a1eklYtX2J",
+  },
+  "href": "https://api.spotify.com/v1/tracks/7tFiyTwD0nx5a1eklYtX2J",
+  "id": "7tFiyTwD0nx5a1eklYtX2J",
+  "is_local": false,
+  "name": "Bohemian Rhapsody - Remastered 2011",
+  "popularity": 79,
+  "preview_url": null,
+  "track_number": 11,
+  "type": "track",
+  "uri": "spotify:track:7tFiyTwD0nx5a1eklYtX2J",
+}
+`;

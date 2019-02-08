@@ -38,7 +38,9 @@ exports[`Index should render correctly 1`] = `
         bottom={true}
         delay={300}
       >
-        <button>
+        <button
+          onClick={[Function]}
+        >
           Get Started
         </button>
       </Fade>
@@ -173,7 +175,9 @@ exports[`Index should render correctly 1`] = `
       bottom={true}
       delay={300}
     >
-      <button>
+      <button
+        onClick={[Function]}
+      >
         Start a Party
       </button>
     </Fade>
