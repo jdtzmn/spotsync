@@ -1,13 +1,11 @@
-/// <reference types="jest" />
 import * as React from 'react'
 import { shallow } from 'enzyme'
-import Index from 'pages/index'
+import Code from 'pages/Code'
 
-describe('Index', () => {
+describe('Code', () => {
   let wrapper
   beforeEach(() => {
-    window.scrollTo = () => {/* mock scrollTo */}
-    wrapper = shallow(<Index />)
+    wrapper = shallow(<Code />)
   })
 
   it('should render correctly', () => {

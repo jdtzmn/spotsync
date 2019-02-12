@@ -6,10 +6,16 @@ import cookieParser from 'cookie-parser'
 import { celebrate, Joi, errors } from 'celebrate'
 import axios from 'axios'
 
+/* ==================== */
+/* ======= SETUP ====== */
+/* ==================== */
+
+// Config
 import { cookieSecret, scopes, clientId, clientSecret, redirectUri } from '../config'
 const authorizationUrl = 'https://accounts.spotify.com/api/token'
 const basicAuthorization = `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`
 
+// Router
 const router = express.Router()
 router.use(cookieParser(cookieSecret))
 router.use(errors())
@@ -22,26 +28,43 @@ router.use(errors())
 const generateState = () => randomBytes(6).toString('hex')
 
 // Request authorization_code and refresh_token
+const requestTokens = (code: string, type: string = 'authorization_code') => {
+  const data = {
+    grant_type: type,
+    redirect_uri: redirectUri,
+    code: undefined,
+    refresh_token: undefined
+  }
 
-const requestTokens = (code: string) => {
-  const data = stringify({
-    grant_type: 'authorization_code',
-    code,
-    redirect_uri: redirectUri
-  })
+  switch (type) {
+    case 'refresh_token':
+      data.refresh_token = code
+      break
+    default:
+      data.code = code
+  }
 
-  return axios.post(authorizationUrl, data, {
+  const urlEncodedData = stringify(data)
+
+  return axios.post(authorizationUrl, urlEncodedData, {
     headers: {
       Authorization: basicAuthorization
     }
   }).then(((response) => response.data))
 }
 
-/* ==================== */
-/* ====== ROUTES ====== */
-/* ==================== */
+const constructResponseUrl = (req: any, origin?: string) => {
+  // Redirect to origin or app url
+  const responseURL = new URL(`${req.protocol}://${req.get('host')}/find`)
+  if (origin) {
+    responseURL.pathname = decodeURIComponent(origin)
+  }
 
-router.get('/login', (req, res) => {
+  return responseURL
+}
+
+// Handle initial login request (when there is no request token stored)
+const handleLogin = (req, res) => {
   // Set origin cookie to redirect back to once the authorization flow is complete
   const { origin } = req.query
   if (origin) {
@@ -64,6 +87,57 @@ router.get('/login', (req, res) => {
     `&state=${state}` +
     `&redirect_uri=${encodeURIComponent(redirectUri)}`
   )
+}
+
+// Handle a refresh of the access token using a stored refresh token
+const refreshToken = async (req, res, token: string) => {
+  // Define origin to redirect back to once the token is refreshed
+  const { origin } = req.query
+
+  let accessToken
+  try {
+    const data = await requestTokens(token, 'refresh_token')
+    accessToken = data.access_token
+  } catch (err) {
+    return res.sendStatus(400)
+  }
+
+  // Set access token to expire in an hour
+  res.cookie('access_token', accessToken, {
+    expires: new Date(Date.now() + 36e5),
+    signed: true,
+    httpOnly: true
+  })
+
+  // Redirect to origin or app url
+  const responseURL = constructResponseUrl(req, origin)
+  res.redirect(responseURL)
+}
+
+/* ==================== */
+/* ====== ROUTES ====== */
+/* ==================== */
+
+router.get('/login', celebrate({
+  signedCookies: Joi.object({
+    access_token: Joi.string(),
+    refresh_token: Joi.string()
+  }).unknown()
+}), (req, res) => {
+  const { signedCookies: { access_token, refresh_token } } = req
+
+  // Go to the response url if both access_token and refresh_token exist
+  if (access_token && refresh_token) {
+    const { origin } = req.query
+    const responseURL = constructResponseUrl(req, origin)
+    res.redirect(responseURL)
+  // If there is a refresh_token, but not an access_token, refresh the token
+  } else if (refresh_token) {
+    return refreshToken(req, res, refresh_token)
+  } else {
+  // Otherwise handle an initial login
+    return handleLogin(req, res)
+  }
 })
 
 router.get('/redirect', celebrate({
@@ -74,11 +148,9 @@ router.get('/redirect', celebrate({
   cookies: {
     origin: Joi.string(),
   },
-  signedCookies: {
-    spotify_state: Joi.string().required(),
-    access_token: Joi.string(),
-    refresh_token: Joi.string()
-  }
+  signedCookies: Joi.object({
+    spotify_state: Joi.string().required()
+  }).unknown()
 }), async (req, res) => {
   // Verify that the states match
   if (req.query.state !== req.signedCookies.spotify_state) {
@@ -113,13 +185,13 @@ router.get('/redirect', celebrate({
   })
 
   // Redirect to origin or app url
-  const responseURL = new URL(`${req.protocol}://${req.get('host')}/find`)
+  const origin = req.cookies && req.cookies.origin
+  const responseURL = constructResponseUrl(req, origin)
 
-  if (req.cookies && req.cookies.origin) {
-    responseURL.pathname = decodeURIComponent(req.cookies.origin)
-    res.clearCookie('origin')
-  }
+  // Clear the origin cookie
+  if (origin) res.clearCookie('origin')
 
+  // Redirect to the response URL
   res.redirect(responseURL)
 })
 

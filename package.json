@@ -10,6 +10,7 @@
     "test:unit": "jest",
     "test:e2e": "start-server-and-test start 3000 test:cypress",
     "test:cypress": "cypress run",
+    "cypress:open": "cypress open",
     "ci": "concurrently --kill-others-on-fail \"npm:test:unit\" \"npm:test:e2e\"",
     "lint": "concurrently \"npm:lint:*\"",
     "lint:ts": "tslint -c tslint.json -p .",
@@ -50,11 +51,13 @@
     "express": "^4.16.4",
     "next": "^7.0.2",
     "next-images": "^1.0.4",
+    "next-routes": "^1.4.2",
     "node-sass": "^4.9.4",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-reveal": "^1.2.2",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

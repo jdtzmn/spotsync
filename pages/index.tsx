@@ -1,5 +1,6 @@
 import * as React from 'react'
-import Head from 'next/head'
+import Link from 'next/link'
+import Page from '../layouts/main'
 import Fade from 'react-reveal/Fade'
 import Tada from 'react-reveal/Tada'
 
@@ -10,51 +11,43 @@ import addSongGif from '../static/index/add_song.gif'
 
 import Footer from '../components/Footer'
 
-class Index extends React.Component {
-  constructor (props) {
-    super(props)
-    this.loginWithSpotify = this.loginWithSpotify.bind(this)
-  }
+const index = () => {
+  // --- generate the party steps ---
+  const partyStepsData = [
+    {
+      title: 'Share the party over sound',
+      description: 'Plays a sequence of notes from one member to another'
+    },
+    {
+      title: 'Scan a QR code',
+      description: 'Scan a QR code to instantly connect'
+    },
+    {
+      title: 'Enter a code',
+      description: "It's as easy as that"
+    }
+  ]
 
-  render () {
-    // --- generate the party steps ---
-    const partyStepsData = [
-      {
-        title: 'Share the party over sound',
-        description: 'Plays a sequence of notes from one member to another'
-      },
-      {
-        title: 'Scan a QR code',
-        description: 'Scan a QR code to instantly connect'
-      },
-      {
-        title: 'Enter a code',
-        description: "It's as easy as that"
-      }
-    ]
+  const partySteps = partyStepsData.map((step, index) => (
+    <div key={index}>
+      <Fade bottom delay={400}>
+        <h2 className={css.stepNumber}>
+          {index + 1}
+        </h2>
+        <h2 className={css.stepTitle}>
+          {step.title}
+        </h2>
+        <h3 className={css.stepDescription}>
+          {step.description}
+        </h3>
+      </Fade>
+    </div>
+  ))
 
-    const partySteps = partyStepsData.map((step, index) => (
-      <div key={index}>
-        <Fade bottom delay={400}>
-          <h2 className={css.stepNumber}>
-            {index + 1}
-          </h2>
-          <h2 className={css.stepTitle}>
-            {step.title}
-          </h2>
-          <h3 className={css.stepDescription}>
-            {step.description}
-          </h3>
-        </Fade>
-      </div>
-    ))
-
-    // --- render the component ---
-    return (
-      <div className={css.container}>
-        <Head>
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" key="viewport" />
-        </Head>
+  // --- render the component ---
+  return (
+    <Page>
+      <div className={css.topPadding}>
         {/* First Container */}
         <Fade>
           <img
@@ -74,9 +67,11 @@ class Index extends React.Component {
           </div>
           <div className={css.buttonGroup}>
             <Fade bottom delay={300}>
-              <button className={css.getStarted} onClick={this.loginWithSpotify}>
-                Get Started
-              </button>
+              <Link href='/auth/login'>
+                <button className={css.getStarted} data-cypress='get-started'>
+                  Get Started
+                </button>
+              </Link>
             </Fade>
             <Fade bottom delay={350}>
               <sub className={css.getStartedDescription}>By logging in with Spotify</sub>
@@ -135,9 +130,11 @@ class Index extends React.Component {
             </h1>
           </Fade>
           <Fade bottom delay={300}>
-            <button className={css.getStarted} onClick={this.loginWithSpotify}>
-              Start a Party
-            </button>
+            <Link href='/auth/login'>
+              <button className={css.getStarted} data-cypress='start-a-party'>
+                Start a Party
+              </button>
+            </Link>
           </Fade>
           <Fade bottom delay={350}>
             <Tada delay={1000}>
@@ -150,12 +147,8 @@ class Index extends React.Component {
         {/* Footer */}
         <Footer />
       </div>
-    )
-  }
-
-  loginWithSpotify () {
-    window.location.replace('/auth/login')
-  }
+    </Page>
+  )
 }
 
-export default Index
+export default index

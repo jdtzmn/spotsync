@@ -1,7 +1,7 @@
 @import '../globals';
 @import '../buttons';
 
-.container {
+.topPadding {
   // display
   padding-top: 24pt;
 }
@@ -16,13 +16,6 @@
 .padding {
   // display
   padding: 24pt 14pt;
-}
-
-.subtitle {
-  @extend %title;
-  
-  // color
-  color: $darkgray;
 }
 
 .buttonGroup {

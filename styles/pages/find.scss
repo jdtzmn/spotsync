@@ -1,0 +1,56 @@
+@import '../globals';
+@import '../buttons';
+
+.flexContainer {
+  // display
+  display: flex;
+  height: calc(100vh - (2 * 16pt) - 100pt);
+
+  // flex
+  flex-direction: column;
+}
+
+.fourButtonGrid {
+  // display
+  display: grid;
+  padding-top: 16pt;
+  
+  // flex
+  flex-grow: 1;
+
+  // grid
+  grid-template-columns: calc(50% - 8pt) calc(50% - 8pt);
+  grid-template-rows: 50% 50%;
+  grid-column-gap: 16pt;
+  grid-row-gap: 16pt;
+  justify-items: stretch;
+  align-items: stretch;
+}
+
+.optionButton {
+  // position
+  position: relative;
+
+  // color
+  background: $lightgray;
+
+  // border
+  border: 0;
+  border-radius: 16pt;
+
+  // outline
+  outline: none;
+}
+
+.buttonFont {
+  @extend %button2-font;
+
+  // position
+  position: absolute;
+  bottom: 16pt;
+  left: 0;
+  right: 0;
+
+  // color
+  color: $muted;
+}

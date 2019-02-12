@@ -3,13 +3,14 @@ import { Server } from 'http'
 import next from 'next'
 import bodyParser from 'body-parser'
 
+import routes from './routes'
 import authRoutes from './auth'
 import handleSockets from './ws'
 
 const port = parseInt(process.env.PORT, 10) || 3000
 const dev = process.env.NODE_ENV !== 'production'
 const nextApp = next({ dev })
-const handle = nextApp.getRequestHandler()
+const routeHandler = routes.getRequestHandler(nextApp)
 
 nextApp.prepare()
   .then(() => {
@@ -28,12 +29,8 @@ nextApp.prepare()
     /* ==================== */
 
     app.use(bodyParser.json())
-
     app.use('/auth', authRoutes)
-
-    app.get('*', (req, res) => {
-      return handle(req, res)
-    })
+    app.use(routeHandler)
 
     server.listen(port, (err) => {
       if (err) throw err

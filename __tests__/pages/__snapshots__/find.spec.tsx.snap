@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Find should render correctly 1`] = `
+<main>
+  <div>
+    <div>
+      <h1>
+        Find a Party
+      </h1>
+      <sub>
+        Choose an option below
+      </sub>
+      <div>
+        <Link
+          href="/code"
+          key="0"
+        >
+          <button>
+            <h3>
+              Use a code
+            </h3>
+          </button>
+        </Link>
+        <Link
+          href="/party/"
+          key="1"
+        >
+          <button>
+            <h3>
+              Create your own
+            </h3>
+          </button>
+        </Link>
+      </div>
+    </div>
+  </div>
+</main>
+`;

@@ -17,7 +17,8 @@
     "paths": {
       "@/*": ["./*"],
       "server/*": ["./server/*"],
-      "pages/*": ["./pages/*"]
+      "pages/*": ["./pages/*"],
+      "layouts/*": ["./layouts/*"]
     },
     "typeRoots": [
       "./node_modules/@types"

@@ -2,12 +2,27 @@
 
 // BUTTON FONT
 
-%button1-font {
+%button-font {
   // color
   color: $lightgray;
 
   // font
+  text-align: center;
+}
+
+%button1-font {
+  @extend %button-font;
+
+  // font
   font-size: 1.5em;
+  font-weight: 600;
+}
+
+%button2-font {
+  @extend %button-font;
+
+  // font
+  font-size: 1em;
   font-weight: 600;
 }
 

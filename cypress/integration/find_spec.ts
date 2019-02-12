@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
-describe('Index', () => {
+describe('Find', () => {
   it('Visits the page', () => {
-    cy.visit('/')
+    cy.visit('/find')
   })
 })
