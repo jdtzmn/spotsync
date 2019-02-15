@@ -3,9 +3,10 @@ import Link from 'next/link'
 import Page from '../layouts/main'
 import css from '../styles/pages/find.scss';
 
-const find = () => {
-  const generateRoom = () => Math.random().toString().slice(2, 8)
+// A little helper to generate a random room number
+const generateRoom = () => Math.random().toString().slice(2, 8)
 
+const find = () => {
   const buttonsData = [
     {
       name: 'Use a code',

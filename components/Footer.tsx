@@ -53,7 +53,7 @@ const Footer = () => {
         © 2018 Jacob Daitzman. All rights reserved.
       </p>
     </div>
-  );
-};
+  )
+}
 
 export default Footer

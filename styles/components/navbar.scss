@@ -1,0 +1,55 @@
+@import '../globals';
+
+.navbar {
+
+  // display
+  height: 56px;
+  
+}
+
+%navbar-style {
+  // color
+  background: $white; 
+
+  // display
+  width: 100%;
+
+  // border
+  border-bottom: 1px solid #F1F1F1;
+  
+  // position
+  position: fixed;
+
+  // transition
+  transition: box-shadow 0.2s, background 0.2s;
+
+  // other
+  z-index: 1;
+}
+
+.default {
+  @extend %navbar-style;
+}
+
+.fixed {
+  @extend %navbar-style;
+  
+  // color
+  background: rgba($lightgray, 0.975); // give it a slight transparent effect
+
+  // shadow
+  box-shadow: 0 2px 4px rgba(#4D4D4D, 0.5);
+}
+
+.navbarTitle {
+  @extend %title;
+
+  // color
+  color: $darkgray;
+
+  // display
+  padding: 16px;
+
+  // font
+  font-weight: 600;
+}

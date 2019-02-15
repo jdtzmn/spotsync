@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Link from 'next/link'
 import Page from '../layouts/main'
+import Navbar from '../components/Navbar'
 import Fade from 'react-reveal/Fade'
 import Tada from 'react-reveal/Tada'
 
@@ -15,15 +16,15 @@ const index = () => {
   // --- generate the party steps ---
   const partyStepsData = [
     {
-      title: 'Share the party over sound',
-      description: 'Plays a sequence of notes from one member to another'
+      title: 'Create a room',
+      description: 'A personalized room just for you'
     },
     {
-      title: 'Scan a QR code',
-      description: 'Scan a QR code to instantly connect'
+      title: 'Share the code',
+      description: 'Invite people to join your room'
     },
     {
-      title: 'Enter a code',
+      title: 'Add to queue',
       description: "It's as easy as that"
     }
   ]
@@ -47,6 +48,7 @@ const index = () => {
   // --- render the component ---
   return (
     <Page>
+      <Navbar />
       <div className={css.topPadding}>
         {/* First Container */}
         <Fade>
@@ -95,7 +97,7 @@ const index = () => {
             </Fade>
             <Fade bottom delay={600}>
               <sub className={css.partySubtitle}>
-                Many ways to connect to the party
+                In three simple steps
               </sub>
             </Fade>
             {/* Second Container Steps */}

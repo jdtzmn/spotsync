@@ -2,6 +2,7 @@
 
 exports[`Index should render correctly 1`] = `
 <main>
+  <Navbar />
   <div>
     <Fade>
       <img
@@ -75,7 +76,7 @@ exports[`Index should render correctly 1`] = `
           delay={600}
         >
           <sub>
-            Many ways to connect to the party
+            In three simple steps
           </sub>
         </Fade>
         <div
@@ -89,10 +90,10 @@ exports[`Index should render correctly 1`] = `
               1
             </h2>
             <h2>
-              Share the party over sound
+              Create a room
             </h2>
             <h3>
-              Plays a sequence of notes from one member to another
+              A personalized room just for you
             </h3>
           </Fade>
         </div>
@@ -107,10 +108,10 @@ exports[`Index should render correctly 1`] = `
               2
             </h2>
             <h2>
-              Scan a QR code
+              Share the code
             </h2>
             <h3>
-              Scan a QR code to instantly connect
+              Invite people to join your room
             </h3>
           </Fade>
         </div>
@@ -125,7 +126,7 @@ exports[`Index should render correctly 1`] = `
               3
             </h2>
             <h2>
-              Enter a code
+              Add to queue
             </h2>
             <h3>
               It's as easy as that
