@@ -1,7 +1,10 @@
 import * as React from 'react'
 import Link from 'next/link'
 import Page from '../layouts/main'
-import css from '../styles/pages/find.scss';
+import css from '../styles/pages/find.scss'
+
+import CodeIcon from 'react-ionicons/lib/IosBarcodeOutline'
+import PlusIcon from 'react-ionicons/lib/IosAdd'
 
 // A little helper to generate a random room number
 const generateRoom = () => Math.random().toString().slice(2, 8)
@@ -10,12 +13,12 @@ const find = () => {
   const buttonsData = [
     {
       name: 'Use a code',
-      icon: 'barcode',
+      icon: CodeIcon,
       route: '/code'
     },
     {
       name: 'Create your own',
-      icon: 'plus',
+      icon: PlusIcon,
       route: `/party/${generateRoom()}`
     }
   ]
@@ -23,6 +26,7 @@ const find = () => {
   const buttons = buttonsData.map((button, index) => (
     <Link href={button.route} key={index}>
       <button className={css.optionButton}>
+        <button.icon fontSize='60px' color='#7A7A7A' />
         <h3 className={css.buttonFont}>{button.name}</h3>
       </button>
     </Link>

@@ -16,6 +16,14 @@ exports[`Find should render correctly 1`] = `
           key="0"
         >
           <button>
+            <IosBarcodeOutline
+              beat={false}
+              color="#7A7A7A"
+              fontSize="60px"
+              rotate={false}
+              shake={false}
+              style={Object {}}
+            />
             <h3>
               Use a code
             </h3>
@@ -26,6 +34,14 @@ exports[`Find should render correctly 1`] = `
           key="1"
         >
           <button>
+            <IosAdd
+              beat={false}
+              color="#7A7A7A"
+              fontSize="60px"
+              rotate={false}
+              shake={false}
+              style={Object {}}
+            />
             <h3>
               Create your own
             </h3>
