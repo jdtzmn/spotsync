@@ -1,3 +1,126 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Code should render correctly 1`] = `<div />`;
+exports[`Code should render correctly 1`] = `
+<main>
+  <div>
+    <div>
+      <LinkRoutes
+        route="/find"
+      >
+        <span>
+          ← Choose a different option
+        </span>
+      </LinkRoutes>
+      <h1>
+        Enter Code
+      </h1>
+    </div>
+    <div>
+      <div>
+        <Component
+          autoFocus={true}
+          key="0"
+          onChange={[Function]}
+          onKeyDown={[Function]}
+          options={
+            Object {
+              "blocks": Array [
+                1,
+              ],
+              "numericOnly": true,
+            }
+          }
+          pattern="[0-9]*"
+          placeholder="0"
+          type="number"
+        />
+        <Component
+          autoFocus={false}
+          key="1"
+          onChange={[Function]}
+          onKeyDown={[Function]}
+          options={
+            Object {
+              "blocks": Array [
+                1,
+              ],
+              "numericOnly": true,
+            }
+          }
+          pattern="[0-9]*"
+          placeholder="0"
+          type="number"
+        />
+        <Component
+          autoFocus={false}
+          key="2"
+          onChange={[Function]}
+          onKeyDown={[Function]}
+          options={
+            Object {
+              "blocks": Array [
+                1,
+              ],
+              "numericOnly": true,
+            }
+          }
+          pattern="[0-9]*"
+          placeholder="0"
+          type="number"
+        />
+        <Component
+          autoFocus={false}
+          key="3"
+          onChange={[Function]}
+          onKeyDown={[Function]}
+          options={
+            Object {
+              "blocks": Array [
+                1,
+              ],
+              "numericOnly": true,
+            }
+          }
+          pattern="[0-9]*"
+          placeholder="0"
+          type="number"
+        />
+        <Component
+          autoFocus={false}
+          key="4"
+          onChange={[Function]}
+          onKeyDown={[Function]}
+          options={
+            Object {
+              "blocks": Array [
+                1,
+              ],
+              "numericOnly": true,
+            }
+          }
+          pattern="[0-9]*"
+          placeholder="0"
+          type="number"
+        />
+        <Component
+          autoFocus={false}
+          key="5"
+          onChange={[Function]}
+          onKeyDown={[Function]}
+          options={
+            Object {
+              "blocks": Array [
+                1,
+              ],
+              "numericOnly": true,
+            }
+          }
+          pattern="[0-9]*"
+          placeholder="0"
+          type="number"
+        />
+      </div>
+    </div>
+  </div>
+</main>
+`;

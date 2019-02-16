@@ -1,10 +1,12 @@
 import * as React from 'react'
-import Link from 'next/link'
 import Page from '../layouts/main'
 import css from '../styles/pages/find.scss'
 
 import CodeIcon from 'react-ionicons/lib/IosBarcodeOutline'
 import PlusIcon from 'react-ionicons/lib/IosAdd'
+
+import routes from '../server/routes'
+const { Link } = routes
 
 // A little helper to generate a random room number
 const generateRoom = () => Math.random().toString().slice(2, 8)
@@ -24,7 +26,7 @@ const find = () => {
   ]
 
   const buttons = buttonsData.map((button, index) => (
-    <Link href={button.route} key={index}>
+    <Link route={button.route} key={index}>
       <button className={css.optionButton}>
         <button.icon fontSize='60px' color='#7A7A7A' />
         <h3 className={css.buttonFont}>{button.name}</h3>

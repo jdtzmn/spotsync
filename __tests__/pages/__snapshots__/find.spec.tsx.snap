@@ -11,9 +11,9 @@ exports[`Find should render correctly 1`] = `
         Choose an option below
       </sub>
       <div>
-        <Link
-          href="/code"
+        <LinkRoutes
           key="0"
+          route="/code"
         >
           <button>
             <IosBarcodeOutline
@@ -28,10 +28,10 @@ exports[`Find should render correctly 1`] = `
               Use a code
             </h3>
           </button>
-        </Link>
-        <Link
-          href="/party/"
+        </LinkRoutes>
+        <LinkRoutes
           key="1"
+          route="/party/"
         >
           <button>
             <IosAdd
@@ -46,7 +46,7 @@ exports[`Find should render correctly 1`] = `
               Create your own
             </h3>
           </button>
-        </Link>
+        </LinkRoutes>
       </div>
     </div>
   </div>

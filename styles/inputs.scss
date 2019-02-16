@@ -1,0 +1,54 @@
+@import './colors';
+
+// INPUT FONT
+
+%input-font {
+  // color
+  color: $black;
+
+  // font
+  font-family: inherit;
+}
+
+%input1-font {
+  @extend %input-font;
+
+  // font
+  font-size: 1.5em;
+}
+
+%input2-font {
+  @extend %input-font;
+
+  // font
+  font-size: 1em;
+}
+
+%input {
+  // remove default webkit styles
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+
+  // color
+  background: $lightgray;
+
+  // display
+  padding: 8px 11px;
+
+  // border
+  border: 1px solid $gray;
+  border-radius: 4px;
+  outline: none;
+
+  // transition
+  transition: box-shadow 0.2s;
+
+  &:focus {
+    border-color: $secondary;
+    box-shadow: 0 0 4px rgba($secondary, 0.5);
+  }
+
+  &::placeholder {
+    color: $gray;
+  }
+}

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Link from 'next/link'
 import Page from '../layouts/main'
 import Navbar from '../components/Navbar'
 import Fade from 'react-reveal/Fade'
@@ -11,6 +10,8 @@ import partySvg from '../static/index/party.svg'
 import addSongGif from '../static/index/add_song.gif'
 
 import Footer from '../components/Footer'
+import routes from '../server/routes'
+const { Link } = routes
 
 const index = () => {
   // --- generate the party steps ---
@@ -69,7 +70,7 @@ const index = () => {
           </div>
           <div className={css.buttonGroup}>
             <Fade bottom delay={300}>
-              <Link href='/auth/login'>
+              <Link route='/auth/login'>
                 <button className={css.getStarted} data-cypress='get-started'>
                   Get Started
                 </button>
@@ -132,7 +133,7 @@ const index = () => {
             </h1>
           </Fade>
           <Fade bottom delay={300}>
-            <Link href='/auth/login'>
+            <Link route='/auth/login'>
               <button className={css.getStarted} data-cypress='start-a-party'>
                 Start a Party
               </button>

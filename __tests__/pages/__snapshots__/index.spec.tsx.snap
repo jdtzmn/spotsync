@@ -33,15 +33,15 @@ exports[`Index should render correctly 1`] = `
           bottom={true}
           delay={300}
         >
-          <Link
-            href="/auth/login"
+          <LinkRoutes
+            route="/auth/login"
           >
             <button
               data-cypress="get-started"
             >
               Get Started
             </button>
-          </Link>
+          </LinkRoutes>
         </Fade>
         <Fade
           bottom={true}
@@ -174,15 +174,15 @@ exports[`Index should render correctly 1`] = `
         bottom={true}
         delay={300}
       >
-        <Link
-          href="/auth/login"
+        <LinkRoutes
+          route="/auth/login"
         >
           <button
             data-cypress="start-a-party"
           >
             Start a Party
           </button>
-        </Link>
+        </LinkRoutes>
       </Fade>
       <Fade
         bottom={true}

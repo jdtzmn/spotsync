@@ -1,2 +1,45 @@
 @import '../globals';
 @import '../buttons';
+@import '../inputs';
+
+.backButton {
+  @extend %subtitle;
+
+  // color
+  color: $primary;
+}
+
+.verticallyCenter {
+  // display
+  display: flex;
+  height: 30vh;
+
+  // flex
+  flex-direction: column;
+  justify-content: center;
+}
+
+.inputContainer {
+  // display
+  display: flex;
+}
+
+.numberInput {
+  @extend %input;
+  @extend %input1-font;
+
+  // display
+  min-width: 0;
+  margin: 1vw;
+
+  // font
+  font-size: 2em;
+  text-align: center;
+
+  // hide the number spinners
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+  }
+}
