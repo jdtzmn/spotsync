@@ -3,6 +3,10 @@ let moduleNameMapper = require("tsconfig-paths-jest")(tsconfig)
 moduleNameMapper = {
   "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg)$": "<rootDir>/__mocks__/empty-mock.js",
   "\\.(ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|scss|oga)$": "<rootDir>/__mocks__/empty-mock.js",
+  "@/\/(.*)/": "<rootDir>/$1",
+  "pages\/(.*)/": "<rootDir>/pages/$1",
+  "components\/(.*)/": "<rootDir>/components/$1",
+  "layouts\/(.*)/": "<rootDir>/layouts/$1",
   ...moduleNameMapper
 }
 

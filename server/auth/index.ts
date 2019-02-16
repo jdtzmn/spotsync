@@ -195,4 +195,12 @@ router.get('/redirect', celebrate({
   res.redirect(responseURL)
 })
 
+router.get('/logout', (_, res) => {
+  // clear user data
+  res.clearCookie('access_token')
+  res.clearCookie('refresh_token')
+
+  res.redirect('/')
+})
+
 export default router

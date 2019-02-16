@@ -10,9 +10,14 @@ const express_1 = __importDefault(require("express"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const celebrate_1 = require("celebrate");
 const axios_1 = __importDefault(require("axios"));
+/* ==================== */
+/* ======= SETUP ====== */
+/* ==================== */
+// Config
 const config_1 = require("../config");
 const authorizationUrl = 'https://accounts.spotify.com/api/token';
-const basicAuthorization = `Basic ${new Buffer(`${config_1.clientId}:${config_1.clientSecret}`).toString('base64')}`;
+const basicAuthorization = `Basic ${Buffer.from(`${config_1.clientId}:${config_1.clientSecret}`).toString('base64')}`;
+// Router
 const router = express_1.default.Router();
 router.use(cookie_parser_1.default(config_1.cookieSecret));
 router.use(celebrate_1.errors());
@@ -22,25 +27,42 @@ router.use(celebrate_1.errors());
 // Generate secure state token
 const generateState = () => crypto_1.randomBytes(6).toString('hex');
 // Request authorization_code and refresh_token
-const requestTokens = (code) => {
-    const data = querystring_1.stringify({
-        grant_type: 'authorization_code',
-        code,
-        redirect_uri: config_1.redirectUri
-    });
-    return axios_1.default.post(authorizationUrl, data, {
+const requestTokens = (code, type = 'authorization_code') => {
+    const data = {
+        grant_type: type,
+        redirect_uri: config_1.redirectUri,
+        code: undefined,
+        refresh_token: undefined
+    };
+    switch (type) {
+        case 'refresh_token':
+            data.refresh_token = code;
+            break;
+        default:
+            data.code = code;
+    }
+    const urlEncodedData = querystring_1.stringify(data);
+    return axios_1.default.post(authorizationUrl, urlEncodedData, {
         headers: {
             Authorization: basicAuthorization
         }
     }).then(((response) => response.data));
 };
-/* ==================== */
-/* ====== ROUTES ====== */
-/* ==================== */
-router.get('/login', (req, res) => {
+const constructResponseUrl = (req, origin) => {
+    // Redirect to origin or app url
+    const responseURL = new url_1.URL(`${req.protocol}://${req.get('host')}/find`);
+    if (origin) {
+        responseURL.pathname = decodeURIComponent(origin);
+    }
+    return responseURL;
+};
+// Handle initial login request (when there is no request token stored)
+const handleLogin = (req, res) => {
     // Set origin cookie to redirect back to once the authorization flow is complete
     const { origin } = req.query;
-    res.cookie('origin', origin, { httpOnly: true });
+    if (origin) {
+        res.cookie('origin', origin, { httpOnly: true });
+    }
     // Generate state and set in cookie
     const state = generateState();
     res.cookie('spotify_state', state, {
@@ -55,6 +77,53 @@ router.get('/login', (req, res) => {
         `&scope=${encodeURIComponent(config_1.scopes)}` +
         `&state=${state}` +
         `&redirect_uri=${encodeURIComponent(config_1.redirectUri)}`);
+};
+// Handle a refresh of the access token using a stored refresh token
+const refreshToken = async (req, res, token) => {
+    // Define origin to redirect back to once the token is refreshed
+    const { origin } = req.query;
+    let accessToken;
+    try {
+        const data = await requestTokens(token, 'refresh_token');
+        accessToken = data.access_token;
+    }
+    catch (err) {
+        return res.sendStatus(400);
+    }
+    // Set access token to expire in an hour
+    res.cookie('access_token', accessToken, {
+        expires: new Date(Date.now() + 36e5),
+        signed: true,
+        httpOnly: true
+    });
+    // Redirect to origin or app url
+    const responseURL = constructResponseUrl(req, origin);
+    res.redirect(responseURL);
+};
+/* ==================== */
+/* ====== ROUTES ====== */
+/* ==================== */
+router.get('/login', celebrate_1.celebrate({
+    signedCookies: celebrate_1.Joi.object({
+        access_token: celebrate_1.Joi.string(),
+        refresh_token: celebrate_1.Joi.string()
+    }).unknown()
+}), (req, res) => {
+    const { signedCookies: { access_token, refresh_token } } = req;
+    // Go to the response url if both access_token and refresh_token exist
+    if (access_token && refresh_token) {
+        const { origin } = req.query;
+        const responseURL = constructResponseUrl(req, origin);
+        res.redirect(responseURL);
+        // If there is a refresh_token, but not an access_token, refresh the token
+    }
+    else if (refresh_token) {
+        return refreshToken(req, res, refresh_token);
+    }
+    else {
+        // Otherwise handle an initial login
+        return handleLogin(req, res);
+    }
 });
 router.get('/redirect', celebrate_1.celebrate({
     query: {
@@ -64,11 +133,9 @@ router.get('/redirect', celebrate_1.celebrate({
     cookies: {
         origin: celebrate_1.Joi.string(),
     },
-    signedCookies: {
-        spotify_state: celebrate_1.Joi.string().required(),
-        access_token: celebrate_1.Joi.string(),
-        refresh_token: celebrate_1.Joi.string()
-    }
+    signedCookies: celebrate_1.Joi.object({
+        spotify_state: celebrate_1.Joi.string().required()
+    }).unknown()
 }), async (req, res) => {
     // Verify that the states match
     if (req.query.state !== req.signedCookies.spotify_state) {
@@ -98,12 +165,19 @@ router.get('/redirect', celebrate_1.celebrate({
         httpOnly: true
     });
     // Redirect to origin or app url
-    const responseURL = new url_1.URL(`${req.protocol}://${req.get('host')}/find`);
-    if (req.cookies && req.cookies.origin) {
-        responseURL.pathname = decodeURIComponent(req.cookies.origin);
+    const origin = req.cookies && req.cookies.origin;
+    const responseURL = constructResponseUrl(req, origin);
+    // Clear the origin cookie
+    if (origin)
         res.clearCookie('origin');
-    }
+    // Redirect to the response URL
     res.redirect(responseURL);
+});
+router.get('/logout', (_, res) => {
+    // clear user data
+    res.clearCookie('access_token');
+    res.clearCookie('refresh_token');
+    res.redirect('/');
 });
 exports.default = router;
 //# sourceMappingURL=index.js.map
