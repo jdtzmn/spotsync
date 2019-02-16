@@ -2,6 +2,8 @@
 
 > spotify in sync
 
+### Disclaimer: this is Spotsync v1.0.0. To look at the code for version 4, [click here](https://github.com/jdtzmn/spotsync/tree/v4.0.0).
+
 ## Build Setup
 
 ``` bash
