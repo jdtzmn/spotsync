@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { shallow } from 'enzyme'
-import Find from 'pages/Find'
+import Find from 'pages/find'
 
 describe('Find', () => {
   let wrapper

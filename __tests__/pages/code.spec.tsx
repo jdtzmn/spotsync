@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { shallow } from 'enzyme'
-import Code from 'pages/Code'
+import Code from 'pages/code'
 
 describe('Code', () => {
   let wrapper

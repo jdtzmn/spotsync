@@ -30,11 +30,11 @@ const index = () => {
     }
   ]
 
-  const partySteps = partyStepsData.map((step, index) => (
-    <div key={index}>
+  const partySteps = partyStepsData.map((step, i) => (
+    <div key={i}>
       <Fade bottom delay={400}>
         <h2 className={css.stepNumber}>
-          {index + 1}
+          {i + 1}
         </h2>
         <h2 className={css.stepTitle}>
           {step.title}
