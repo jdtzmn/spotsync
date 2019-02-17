@@ -13,9 +13,11 @@ class Navbar extends React.Component {
   }
 
   render () {
+    const { hasScrolled } = this.state
+
     return (
       <div className={css.navbar}>
-        <div className={this.state.hasScrolled ? css.fixed : css.default}>
+        <div className={hasScrolled ? css.fixed : css.default}>
           <h1 className={css.navbarTitle}>Spotsync.</h1>
         </div>
       </div>
@@ -31,6 +33,7 @@ class Navbar extends React.Component {
 
   componentDidMount () {
     document.addEventListener('scroll', this.handleScroll)
+    this.handleScroll()
   }
 
   componentWillUnmount () {

@@ -16,9 +16,6 @@
 
   // border
   border-bottom: 1px solid #F1F1F1;
-  
-  // position
-  position: fixed;
 
   // transition
   transition: box-shadow 0.2s, background 0.2s;
@@ -33,9 +30,12 @@
 
 .fixed {
   @extend %navbar-style;
+
+  // position
+  position: fixed;
   
   // color
-  background: rgba($lightgray, 0.975); // give it a slight transparent effect
+  background: rgba($white, 0.975); // give it a slight transparent effect
 
   // shadow
   box-shadow: 0 2px 4px rgba(#4D4D4D, 0.5);
