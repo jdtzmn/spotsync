@@ -12,6 +12,12 @@
   // display
   display: flex;
   padding: 32pt;
+
+  @include md {
+    // display
+    margin: 0 auto;
+    max-width: 600pt;
+  }
 }
 
 .footerSubContainer {
@@ -30,6 +36,7 @@
   color: $lightgray;
 
   // font
+  font-size: 12pt;
   font-weight: 500;
   text-decoration: none;
 }
@@ -38,6 +45,7 @@
   @extend %subtitle;
 
   // font
+  font-size: 12.5pt;
   font-weight: bold;
 }
 
@@ -68,4 +76,7 @@
   // display
   margin-top: 16pt;
   padding: 8pt 0;
+
+  // font
+  font-size: 10pt;
 }
