@@ -1,4 +1,5 @@
-@import './colors';
+@import 'colors';
+@import 'breakpoints';
 
 // BUTTON FONT
 
@@ -7,8 +8,13 @@
   color: $lightgray;
 
   // font
+  font-family: inherit; // otherwise overwritten by browsers
   text-align: center;
-  font-weight: 600;
+  font-weight: 500;
+
+  @include md {
+    font-weight: 400;
+  }
 }
 
 %button1-font {
@@ -16,6 +22,10 @@
 
   // font
   font-size: 1.5em;
+
+  @include md {
+    font-size: 1.3em;
+  }
 }
 
 %button2-font {
@@ -23,6 +33,10 @@
 
   // font
   font-size: 1em;
+
+  @include md {
+    font-size: 0.9em;
+  }
 }
 
 %button {

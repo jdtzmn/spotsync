@@ -17,8 +17,8 @@ const basicAuthorization = `Basic ${Buffer.from(`${clientId}:${clientSecret}`).t
 
 // Router
 const router = express.Router()
-router.use(cookieParser(cookieSecret))
 router.use(errors())
+router.use(cookieParser(cookieSecret))
 
 /* ==================== */
 /* ====== HELPERS ===== */
@@ -145,9 +145,9 @@ router.get('/redirect', celebrate({
     code: Joi.string().required(),
     state: Joi.string().required()
   },
-  cookies: {
+  cookies: Joi.object({
     origin: Joi.string(),
-  },
+  }).unknown(),
   signedCookies: Joi.object({
     spotify_state: Joi.string().required()
   }).unknown()

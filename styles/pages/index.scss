@@ -8,14 +8,69 @@
 
 // --- FIRST CONTAINER ---
 
-.artwork {
+.responsiveFirstContainer {
+  @include md {
+    // display
+    display: flex;
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 100pt;
+    padding-bottom: 100pt;
+
+    & > * {
+      flex: 1;
+    }
+  }
+}
+
+.artwork, .render {
   // display
   width: 100%;
+  order: 2;
+}
+
+// Show artwork if less than md
+.artwork {
+  @include md {
+    // display
+    display: none;
+  }
+}
+
+.render {
+  // display
+  display: none;
+
+  @include md {
+    // display
+    display: block;
+    max-width: 300pt;
+    width: 0; // so the image will scale down
+    height: 100%;
+  }
+}
+
+.firstContainerSideGroup {
+  order: 1;
 }
 
 .padding {
   // display
   padding: 24pt 14pt;
+
+  @include md {
+    padding-bottom: 7pt;
+  }
+}
+
+.firstContainerSubtitle {
+  @extend %subtitle;
+
+  @include md {
+    // font
+    font-size: 2.5em;
+    font-weight: 300;
+  }
 }
 
 .buttonGroup {
@@ -30,6 +85,13 @@
   // display
   width: 100%;
   height: 44px;
+
+  @include md {
+    // display
+    width: auto;
+    padding-left: 12pt;
+    padding-right: 12pt;
+  }
 }
 
 .getStartedDescription {
@@ -41,6 +103,11 @@
 
   // display
   padding: 8pt 0 24pt 0;
+
+  @include md {
+    // display
+    display: none;
+  }
 }
 
 // --- SECOND CONTAINER ---

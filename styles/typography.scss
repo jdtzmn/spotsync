@@ -1,4 +1,5 @@
-@import './colors';
+@import 'colors';
+@import 'breakpoints';
 
 // FONT FACES
 
@@ -30,6 +31,18 @@ html, body {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 7.5pt;
   color: $black;
+
+  @include sm {
+    font-size: 8.5pt;
+  }
+
+  @include md {
+    font-size: 9.5pt;
+  }
+
+  @include lg {
+    font-size: 10.5pt;
+  }
 }
 
 h1, h2, h3, h4, h5, h6, p {
@@ -56,6 +69,10 @@ sub {
 }
 
 %subtitle {
+  // color
+  color: $darkgray;
+
+  // font
   font-size: 1.6em;
 }
 

@@ -6,6 +6,7 @@ import Tada from 'react-reveal/Tada'
 
 import css from '../styles/pages/index.scss';
 import artwork from '../static/index/phone_artwork.svg'
+import render from '../static/index/phone_render.png'
 import partySvg from '../static/index/party.svg'
 import addSongGif from '../static/index/add_song.gif'
 
@@ -52,33 +53,41 @@ const index = () => {
       <Navbar />
       <div className={css.topPadding}>
         {/* First Container */}
-        <Fade>
-          <img
-            className={css.artwork}
-            src={artwork}
-            alt=""
-          />
-        </Fade>
-        <div>
-          <div className={css.padding}>
-            <Fade bottom>
-              <h1 className={css.hero}>Spotify in sync</h1>
-            </Fade>
-            <Fade bottom delay={200}>
-              <sub className={css.subtitle}>Spotsync makes multi-device listening a breeze</sub>
-            </Fade>
-          </div>
-          <div className={css.buttonGroup}>
-            <Fade bottom delay={300}>
-              <Link route='/auth/login'>
-                <button className={css.getStarted} data-cypress='get-started'>
-                  Get Started
-                </button>
-              </Link>
-            </Fade>
-            <Fade bottom delay={350}>
-              <sub className={css.getStartedDescription}>By logging in with Spotify</sub>
-            </Fade>
+        <div className={css.responsiveFirstContainer}>
+          <Fade delay={150}>
+            {/* Choose one of the following images based on breakpoint */}
+            <img
+              className={css.artwork}
+              src={artwork}
+              alt=""
+            />
+            <img
+              className={css.render}
+              src={render}
+              alt=""
+            />
+          </Fade>
+          <div className={css.firstContainerSideGroup}>
+            <div className={css.padding}>
+              <Fade bottom>
+                <h1 className={css.hero}>Spotify in sync</h1>
+              </Fade>
+              <Fade bottom delay={200}>
+                <sub className={css.firstContainerSubtitle}>Spotsync makes multi-device listening a breeze</sub>
+              </Fade>
+            </div>
+            <div className={css.buttonGroup}>
+              <Fade bottom delay={300}>
+                <Link route='/auth/login'>
+                  <button className={css.getStarted} data-cypress='get-started'>
+                    Get Started
+                  </button>
+                </Link>
+              </Fade>
+              <Fade bottom delay={350}>
+                <sub className={css.getStartedDescription}>By logging in with Spotify</sub>
+              </Fade>
+            </div>
           </div>
         </div>
         {/* Second Container */}

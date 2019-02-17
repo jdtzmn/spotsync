@@ -4,53 +4,61 @@ exports[`Index should render correctly 1`] = `
 <main>
   <Navbar />
   <div>
-    <Fade>
-      <img
-        alt=""
-        src=""
-      />
-    </Fade>
     <div>
+      <Fade
+        delay={150}
+      >
+        <img
+          alt=""
+          src=""
+        />
+        <img
+          alt=""
+          src=""
+        />
+      </Fade>
       <div>
-        <Fade
-          bottom={true}
-        >
-          <h1>
-            Spotify in sync
-          </h1>
-        </Fade>
-        <Fade
-          bottom={true}
-          delay={200}
-        >
-          <sub>
-            Spotsync makes multi-device listening a breeze
-          </sub>
-        </Fade>
-      </div>
-      <div>
-        <Fade
-          bottom={true}
-          delay={300}
-        >
-          <LinkRoutes
-            route="/auth/login"
+        <div>
+          <Fade
+            bottom={true}
           >
-            <button
-              data-cypress="get-started"
+            <h1>
+              Spotify in sync
+            </h1>
+          </Fade>
+          <Fade
+            bottom={true}
+            delay={200}
+          >
+            <sub>
+              Spotsync makes multi-device listening a breeze
+            </sub>
+          </Fade>
+        </div>
+        <div>
+          <Fade
+            bottom={true}
+            delay={300}
+          >
+            <LinkRoutes
+              route="/auth/login"
             >
-              Get Started
-            </button>
-          </LinkRoutes>
-        </Fade>
-        <Fade
-          bottom={true}
-          delay={350}
-        >
-          <sub>
-            By logging in with Spotify
-          </sub>
-        </Fade>
+              <button
+                data-cypress="get-started"
+              >
+                Get Started
+              </button>
+            </LinkRoutes>
+          </Fade>
+          <Fade
+            bottom={true}
+            delay={350}
+          >
+            <sub>
+              By logging in with Spotify
+            </sub>
+          </Fade>
+        </div>
       </div>
     </div>
     <div>
