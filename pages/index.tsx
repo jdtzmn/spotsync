@@ -149,14 +149,14 @@ const index = () => {
           </Fade>
           <Fade bottom delay={300}>
             <Link route='/auth/login'>
-              <button className={css.getStarted} data-cypress='start-a-party'>
+              <button className={css.startAParty} data-cypress='start-a-party'>
                 Start a Party
               </button>
             </Link>
           </Fade>
           <Fade bottom delay={350}>
             <Tada delay={1000}>
-              <sub className={css.getStartedDescription}>
+              <sub className={css.startAPartyDescription}>
                 (It's free)
               </sub>
             </Tada>

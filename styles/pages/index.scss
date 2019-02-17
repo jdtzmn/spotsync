@@ -78,13 +78,28 @@
   padding: 0 14pt;
 }
 
-.getStarted {
+%index-button {
   @extend %button;
   @extend %button1-font;
 
   // display
   width: 100%;
   height: 44px;
+}
+
+%index-button-description {
+  @extend %paragraph;
+  @extend %text-center;
+
+  // color
+  color: $gray;
+
+  // display
+  padding: 8pt 0 24pt 0;
+}
+
+.getStarted {
+  @extend %index-button;
 
   @include md {
     // display
@@ -95,14 +110,7 @@
 }
 
 .getStartedDescription {
-  @extend %paragraph;
-  @extend %text-center;
-
-  // color
-  color: $gray;
-
-  // display
-  padding: 8pt 0 24pt 0;
+  @extend %index-button-description;
 
   @include md {
     // display
@@ -289,4 +297,23 @@
   @extend %text-center;
 
   padding-bottom: 24pt;
+}
+
+.startAParty {
+  @extend %index-button;
+
+  // display
+  display: block;
+  margin: 0 auto;
+  max-width: 168pt;
+
+  @include md {
+    // display
+    max-width: 304pt;
+    margin-bottom: 8pt;
+  }
+}
+
+.startAPartyDescription {
+  @extend %index-button-description;
 }
