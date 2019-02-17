@@ -1,4 +1,10 @@
 .container {
   // display
   padding: 16pt 16pt;
+  max-width: 1000pt;
+  margin: 0 auto;
+
+  @include md {
+    padding-top: 32pt;
+  }
 }
