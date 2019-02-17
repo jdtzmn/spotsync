@@ -59,11 +59,13 @@ const index = () => {
             <img
               className={css.artwork}
               src={artwork}
+              data-cy='artwork'
               alt=""
             />
             <img
               className={css.render}
               src={render}
+              data-cy='render'
               alt=""
             />
           </Fade>
@@ -77,9 +79,9 @@ const index = () => {
               </Fade>
             </div>
             <div className={css.buttonGroup}>
-              <Fade bottom delay={300}>
+              <Fade bottom delay={350}>
                 <Link route='/auth/login'>
-                  <button className={css.getStarted} data-cypress='get-started'>
+                  <button className={css.getStarted} data-cy='get-started'>
                     Get Started
                   </button>
                 </Link>
@@ -96,6 +98,7 @@ const index = () => {
             <img
               className={css.partySvg}
               src={partySvg}
+              data-cy='party-icon'
               alt=""
             />
           </Fade>
@@ -149,7 +152,7 @@ const index = () => {
           </Fade>
           <Fade bottom delay={300}>
             <Link route='/auth/login'>
-              <button className={css.startAParty} data-cypress='start-a-party'>
+              <button className={css.startAParty} data-cy='start-a-party'>
                 Start a Party
               </button>
             </Link>

@@ -10,10 +10,12 @@ exports[`Index should render correctly 1`] = `
       >
         <img
           alt=""
+          data-cy="artwork"
           src=""
         />
         <img
           alt=""
+          data-cy="render"
           src=""
         />
       </Fade>
@@ -38,13 +40,13 @@ exports[`Index should render correctly 1`] = `
         <div>
           <Fade
             bottom={true}
-            delay={300}
+            delay={350}
           >
             <LinkRoutes
               route="/auth/login"
             >
               <button
-                data-cypress="get-started"
+                data-cy="get-started"
               >
                 Get Started
               </button>
@@ -67,6 +69,7 @@ exports[`Index should render correctly 1`] = `
       >
         <img
           alt=""
+          data-cy="party-icon"
           src=""
         />
       </Fade>
@@ -192,7 +195,7 @@ exports[`Index should render correctly 1`] = `
           route="/auth/login"
         >
           <button
-            data-cypress="start-a-party"
+            data-cy="start-a-party"
           >
             Start a Party
           </button>

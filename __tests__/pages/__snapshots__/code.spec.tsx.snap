@@ -19,6 +19,7 @@ exports[`Code should render correctly 1`] = `
       <div>
         <Component
           autoFocus={true}
+          data-cy="number-0"
           key="0"
           onChange={[Function]}
           onKeyDown={[Function]}
@@ -36,6 +37,7 @@ exports[`Code should render correctly 1`] = `
         />
         <Component
           autoFocus={false}
+          data-cy="number-1"
           key="1"
           onChange={[Function]}
           onKeyDown={[Function]}
@@ -53,6 +55,7 @@ exports[`Code should render correctly 1`] = `
         />
         <Component
           autoFocus={false}
+          data-cy="number-2"
           key="2"
           onChange={[Function]}
           onKeyDown={[Function]}
@@ -70,6 +73,7 @@ exports[`Code should render correctly 1`] = `
         />
         <Component
           autoFocus={false}
+          data-cy="number-3"
           key="3"
           onChange={[Function]}
           onKeyDown={[Function]}
@@ -87,6 +91,7 @@ exports[`Code should render correctly 1`] = `
         />
         <Component
           autoFocus={false}
+          data-cy="number-4"
           key="4"
           onChange={[Function]}
           onKeyDown={[Function]}
@@ -104,6 +109,7 @@ exports[`Code should render correctly 1`] = `
         />
         <Component
           autoFocus={false}
+          data-cy="number-5"
           key="5"
           onChange={[Function]}
           onKeyDown={[Function]}

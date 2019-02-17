@@ -17,7 +17,10 @@ class Navbar extends React.Component {
 
     return (
       <div className={css.navbar}>
-        <div className={hasScrolled ? css.fixed : css.default}>
+        <div
+          className={hasScrolled ? css.fixed : css.default}
+          data-cy='navbar'
+        >
           <h1 className={css.navbarTitle}>Spotsync.</h1>
         </div>
       </div>

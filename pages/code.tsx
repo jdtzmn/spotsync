@@ -65,6 +65,7 @@ class Code extends React.Component {
             ref={(instance) => { this.numberRefs[index] = instance }}
             onChange={this.handleKeyUp.bind(this, index)}
             onKeyDown={this.handleKeyDown.bind(this, index)}
+            data-cy={`number-${index}`}
           />
         )
       })
