@@ -115,11 +115,17 @@
   // display
   padding: 48pt 14pt;
 }
+
 .secondContainer {
   @extend %container-padding;
 
   // color
   background: $lightgray;
+
+  @include md {
+    padding-top: 100pt;
+    padding-bottom: 100pt;
+  }
 }
 
 .partySvg {
@@ -144,6 +150,21 @@
   
   // color
   color: $darkgray;
+}
+
+.responsiveSteps {
+  @include md {
+    // display
+    display: flex;
+    max-width: 800pt;
+    margin: 0 auto;
+    padding-top: 48pt;
+
+    & > * {
+      // flex
+      flex: 1;
+    }
+  }
 }
 
 .stepNumber {

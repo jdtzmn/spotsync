@@ -33,7 +33,7 @@ const index = () => {
 
   const partySteps = partyStepsData.map((step, i) => (
     <div key={i}>
-      <Fade bottom delay={400}>
+      <Fade bottom delay={400 + 100 * i}>
         <h2 className={css.stepNumber}>
           {i + 1}
         </h2>
@@ -111,7 +111,9 @@ const index = () => {
               </sub>
             </Fade>
             {/* Second Container Steps */}
-            {partySteps}
+            <div className={css.responsiveSteps}>
+              {partySteps}
+            </div>
           </div>
         </div>
         {/* Third Container */}

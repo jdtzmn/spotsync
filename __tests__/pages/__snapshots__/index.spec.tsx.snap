@@ -87,59 +87,61 @@ exports[`Index should render correctly 1`] = `
             In three simple steps
           </sub>
         </Fade>
-        <div
-          key="0"
-        >
-          <Fade
-            bottom={true}
-            delay={400}
+        <div>
+          <div
+            key="0"
           >
-            <h2>
-              1
-            </h2>
-            <h2>
-              Create a room
-            </h2>
-            <h3>
-              A personalized room just for you
-            </h3>
-          </Fade>
-        </div>
-        <div
-          key="1"
-        >
-          <Fade
-            bottom={true}
-            delay={400}
+            <Fade
+              bottom={true}
+              delay={400}
+            >
+              <h2>
+                1
+              </h2>
+              <h2>
+                Create a room
+              </h2>
+              <h3>
+                A personalized room just for you
+              </h3>
+            </Fade>
+          </div>
+          <div
+            key="1"
           >
-            <h2>
-              2
-            </h2>
-            <h2>
-              Share the code
-            </h2>
-            <h3>
-              Invite people to join your room
-            </h3>
-          </Fade>
-        </div>
-        <div
-          key="2"
-        >
-          <Fade
-            bottom={true}
-            delay={400}
+            <Fade
+              bottom={true}
+              delay={500}
+            >
+              <h2>
+                2
+              </h2>
+              <h2>
+                Share the code
+              </h2>
+              <h3>
+                Invite people to join your room
+              </h3>
+            </Fade>
+          </div>
+          <div
+            key="2"
           >
-            <h2>
-              3
-            </h2>
-            <h2>
-              Add to queue
-            </h2>
-            <h3>
-              It's as easy as that
-            </h3>
-          </Fade>
+            <Fade
+              bottom={true}
+              delay={600}
+            >
+              <h2>
+                3
+              </h2>
+              <h2>
+                Add to queue
+              </h2>
+              <h3>
+                It's as easy as that
+              </h3>
+            </Fade>
+          </div>
         </div>
       </div>
     </div>
