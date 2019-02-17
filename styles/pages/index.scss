@@ -114,6 +114,12 @@
 %container-padding {
   // display
   padding: 48pt 14pt;
+
+  @include md {
+    // display
+    padding-top: 100pt;
+    padding-bottom: 100pt;
+  }
 }
 
 .secondContainer {
@@ -121,11 +127,6 @@
 
   // color
   background: $lightgray;
-
-  @include md {
-    padding-top: 100pt;
-    padding-bottom: 100pt;
-  }
 }
 
 .partySvg {
@@ -203,7 +204,17 @@
   @extend %container-padding;
 
   // color
-  background: $primary;  
+  background: $primary;
+
+  @include md {
+    // display
+    display: flex;
+
+    & > * {
+      // flex
+      flex: 1;
+    }
+  }
 }
 
 .addSongGif {
@@ -214,6 +225,23 @@
 
   // shadow
   box-shadow: 0 10pt 11pt rgba(77, 77, 77, 40);
+
+  @include md {
+    // display
+    max-width: 200pt;
+    height: 100%;
+  }
+}
+
+.thirdContainerText {
+  @include md {
+    // display
+    display: flex;
+    
+    // flex
+    flex-direction: column;
+    justify-content: center;
+  }
 }
 
 .whiteTitle {
@@ -225,6 +253,11 @@
 
   // display
   padding-top: 48pt;
+
+  @include md {
+    // font
+    text-align: left;
+  }
 }
 
 .whiteDescription {
@@ -232,13 +265,18 @@
   @extend %text-center;
 
   // color
-  color: $white;
+  color: $lightgray;
 
   // display
   padding: 24pt 0;
 
   // font
   font-size: 2.2em;
+
+  @include md {
+    // font
+    text-align: left;
+  }
 }
 
 // --- FOURTH CONTAINER ---

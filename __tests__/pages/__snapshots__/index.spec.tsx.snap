@@ -146,30 +146,34 @@ exports[`Index should render correctly 1`] = `
       </div>
     </div>
     <div>
-      <Fade
-        bottom={true}
-      >
-        <img
-          alt=""
-          src=""
-        />
-      </Fade>
-      <Fade
-        bottom={true}
-        delay={400}
-      >
-        <h1>
-          Every person can add songs to the queue
-        </h1>
-      </Fade>
-      <Fade
-        bottom={true}
-        delay={400}
-      >
-        <sub>
-          The songs will keep on playing
-        </sub>
-      </Fade>
+      <div>
+        <Fade
+          bottom={true}
+        >
+          <img
+            alt=""
+            src=""
+          />
+        </Fade>
+      </div>
+      <div>
+        <Fade
+          bottom={true}
+          delay={400}
+        >
+          <h1>
+            Every person can add songs to the queue
+          </h1>
+        </Fade>
+        <Fade
+          bottom={true}
+          delay={400}
+        >
+          <sub>
+            The songs will keep on playing
+          </sub>
+        </Fade>
+      </div>
     </div>
     <div>
       <Fade

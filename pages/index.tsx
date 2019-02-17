@@ -118,23 +118,27 @@ const index = () => {
         </div>
         {/* Third Container */}
         <div className={css.thirdContainer}>
-          <Fade bottom>
-            <img
-              className={css.addSongGif}
-              src={addSongGif}
-              alt=""
-            />
-          </Fade>
-          <Fade bottom delay={400}>
-            <h1 className={css.whiteTitle}>
-              Every person can add songs to the queue
-            </h1>
-          </Fade>
-          <Fade bottom delay={400}>
-            <sub className={css.whiteDescription}>
-              The songs will keep on playing
-            </sub>
-          </Fade>
+          <div>
+            <Fade bottom>
+              <img
+                className={css.addSongGif}
+                src={addSongGif}
+                alt=""
+              />
+            </Fade>
+          </div>
+          <div className={css.thirdContainerText}>
+            <Fade bottom delay={400}>
+              <h1 className={css.whiteTitle}>
+                Every person can add songs to the queue
+              </h1>
+            </Fade>
+            <Fade bottom delay={400}>
+              <sub className={css.whiteDescription}>
+                The songs will keep on playing
+              </sub>
+            </Fade>
+          </div>
         </div>
         {/* Fourth Container */}
         <div className={css.fourthContainer}>
