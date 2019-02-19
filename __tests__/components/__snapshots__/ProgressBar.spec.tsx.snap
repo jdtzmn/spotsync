@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Progress should render correctly 1`] = `
+<div
+  style={
+    Object {
+      "backgroundColor": "#403EBE",
+      "height": 2,
+      "width": 0,
+    }
+  }
+/>
+`;

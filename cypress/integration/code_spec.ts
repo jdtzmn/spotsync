@@ -37,16 +37,14 @@ describe('Code', () => {
   })
 
   it('Should redirect upon typing all numbers', () => {
+    // type in all the numbers
     const numbers = '314159'.split('')
 
     for (let i = 0; i < numbers.length; i++) {
       getNumber(i).type(numbers[i])
     }
 
-    cy.wait(500)
-
-    cy
-      .url()
-      .should('equal', 'http://localhost:3000/party/314159')
+    cy.location('pathname', { timeout: 30000 })
+      .should('include', '/party/314159')
   })
 })

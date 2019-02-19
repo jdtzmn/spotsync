@@ -30,6 +30,33 @@ exports[`MobileParty should render correctly 1`] = `
         />
       </div>
     </div>
+    <Progress
+      percent={20}
+    />
+  </div>
+  <div>
+    <Track
+      altText="+5"
+      artists={
+        Array [
+          "Vance Joy",
+        ]
+      }
+      cover="https://i.scdn.co/image/cefc7b35a2000f0dcfc676cee8bd9af26b6c751b"
+      key="Riptide"
+      name="Riptide"
+    />
+    <Track
+      altText="+2"
+      artists={
+        Array [
+          "Avicii",
+        ]
+      }
+      cover="https://i.scdn.co/image/98c5699709d8c2497f34a177d159e1b1733f25bb"
+      key="Hey Brother"
+      name="Hey Brother"
+    />
   </div>
 </div>
 `;

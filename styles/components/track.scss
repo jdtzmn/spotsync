@@ -1,0 +1,46 @@
+@import '../globals';
+
+.track {
+  // display
+  display: flex;
+  margin-bottom: 12pt;
+}
+
+.cover {
+  // display
+  width: 48pt;
+  height: 48pt;
+
+  // border
+  border-radius: 4pt;
+}
+
+.detailsContainer {
+  @extend %verticalAlign;
+
+  // flex
+  flex-grow: 1;
+}
+
+.details {
+  // display
+  padding-left: 12pt;
+}
+
+.name {
+  @extend %title;
+}
+
+.artists {
+  @extend %paragraph;
+
+  // color
+  color: $gray;
+}
+
+.altText {
+  @extend %paragraph;
+
+  // color
+  color: $gray;
+}

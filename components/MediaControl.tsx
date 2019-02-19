@@ -1,12 +1,8 @@
 import React, { Component, CSSProperties } from 'react'
+import { runIfIsFn } from './helpers'
 
 import PlayIcon from 'react-ionicons/lib/IosPlay'
 import PauseIcon from 'react-ionicons/lib/IosPause'
-
-const isFn = (fn) => typeof fn === 'function'
-const runIfIsFn = (fn, ...args) => {
-  if (isFn(fn)) fn(...args)
-}
 
 interface MediaControlProps {
   style?: CSSProperties,
