@@ -1,0 +1,83 @@
+@import '../globals';
+@import '../inputs';
+
+.status {
+  // color
+  background: $lightgray;
+}
+
+// --- TOP ROW ---
+
+.topRow {
+  // display
+  display: flex;
+
+  & > div {
+    @extend %input1-font;
+
+    // color
+    color: $gray;
+  
+    // flex
+    flex: 1;
+  }
+}
+
+.position {
+  // font
+  text-align: right;
+}
+
+// --- SONG STATUS ---
+
+.songStatus {
+  // display
+  display: flex;
+  margin-top: 16pt;
+}
+
+.songImage {
+  // color
+  background: $primary;
+  
+  // display
+  width: 64pt;
+  height: 64pt;
+
+  // border
+  border-radius: 16pt;
+
+  // flex
+  flex-shrink: 0;
+}
+
+.songDetails {
+  // display
+  padding: 8pt;
+  padding-left: 0;
+  margin-left: 8pt;
+
+  // flex
+  flex-grow: 1;
+}
+
+.songName {
+  @extend %title;
+
+  // font
+  font-weight: 500;
+}
+
+.artistName {
+  @extend %subtitle;
+
+  // display
+  padding-top: 4pt;
+}
+
+.mediaControl {
+  @extend %verticalAlign;
+
+  // flex
+  flex-shrink: 0;
+}

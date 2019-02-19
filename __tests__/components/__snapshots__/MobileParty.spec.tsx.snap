@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MobileParty should render correctly 1`] = `
+<div>
+  <div>
+    <div>
+      <div>
+        <div>
+          #000000
+        </div>
+        <div>
+          3:07
+        </div>
+      </div>
+      <div>
+        <div>
+          <div />
+        </div>
+        <div>
+          <h1>
+            Believer
+          </h1>
+          <sub>
+            Imagine Dragons
+          </sub>
+        </div>
+        <MediaControl
+          color="#515151"
+          size="40px"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

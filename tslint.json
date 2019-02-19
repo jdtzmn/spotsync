@@ -1,9 +1,9 @@
 {
   "extends": [
+    "tslint:latest",
     "tslint-react",
-    "tslint-config-standard",
-    "tslint-plugin-cypress",
-    "tslint:recommended"
+    "tslint-config-standard-plus",
+    "tslint-plugin-cypress"
   ],
   "linterOptions": {
     "format": "stylish",
@@ -27,7 +27,10 @@
     "await-promise": false,
     "no-unnecessary-qualifier": false,
     "no-unnecessary-type-assertion": false,
-    "strict-type-predicates": false
+    "strict-type-predicates": false,
+    "no-submodule-imports": false,
+    "no-implicit-dependencies": false,
+    "array-bracket-spacing": false
   },
   "jsRules": {
     "semicolon": false,

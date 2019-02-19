@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MediaControl should render correctly 1`] = `
+<div>
+  <IosPause
+    beat={false}
+    color="#000000"
+    fontSize="22px"
+    onClick={[Function]}
+    rotate={false}
+    shake={false}
+    style={Object {}}
+  />
+</div>
+`;

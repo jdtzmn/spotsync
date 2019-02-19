@@ -8,3 +8,12 @@
     padding-top: 32pt;
   }
 }
+
+%verticalAlign {
+  // display
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.verticalAlign { @extend %verticalAlign }

@@ -2,6 +2,7 @@ import express from 'express'
 import { Server } from 'http'
 import next from 'next'
 import bodyParser from 'body-parser'
+import socket from 'socket.io'
 
 import routes from './routes'
 import authRoutes from './auth'
@@ -21,7 +22,7 @@ nextApp.prepare()
     /* ====== SOCKETS ===== */
     /* ==================== */
 
-    const io = require('socket.io')(server)
+    const io = socket(server)
     handleSockets(io)
 
     /* ==================== */

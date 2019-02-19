@@ -104,8 +104,8 @@
   @include md {
     // display
     width: auto;
-    padding-left: 12pt;
-    padding-right: 12pt;
+    padding-left: 24pt;
+    padding-right: 24pt;
   }
 }
 
@@ -245,7 +245,7 @@
   @include md {
     // display
     display: flex;
-    
+
     // flex
     flex-direction: column;
     justify-content: center;

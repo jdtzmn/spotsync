@@ -28,7 +28,7 @@ router.use(cookieParser(cookieSecret))
 const generateState = () => randomBytes(6).toString('hex')
 
 // Request authorization_code and refresh_token
-const requestTokens = (code: string, type: string = 'authorization_code') => {
+const requestTokens = (code: string, type = 'authorization_code') => {
   const data = {
     grant_type: type,
     redirect_uri: redirectUri,
@@ -53,14 +53,14 @@ const requestTokens = (code: string, type: string = 'authorization_code') => {
   }).then(((response) => response.data))
 }
 
-const constructResponseUrl = (req: any, origin?: string) => {
+const constructResponseUrl = (req: express.Request, origin?: string) => {
   // Redirect to origin or app url
   const responseURL = new URL(`${req.protocol}://${req.get('host')}/find`)
   if (origin) {
     responseURL.pathname = decodeURIComponent(origin)
   }
 
-  return responseURL
+  return responseURL.toString()
 }
 
 // Handle initial login request (when there is no request token stored)

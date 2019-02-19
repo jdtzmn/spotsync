@@ -20,7 +20,7 @@ export default class Room {
   public id: string // the room id
   public queue: QueuedTrack[] = [] // the remaining queue of the room
   private timestamp: number // the time that the currently playing song started playing
-  private api: Spotify // the spotify api
+  private readonly api: Spotify // the spotify api
 
   constructor (id: string, api: Spotify) {
     this.id = id

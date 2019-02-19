@@ -2,8 +2,8 @@ import axios, { AxiosInstance, AxiosError, AxiosPromise } from 'axios'
 import { stringify as urlEncode } from 'querystring'
 
 export default class Spotify {
-  private clientId: string
-  private clientSecret: string
+  private readonly clientId: string
+  private readonly clientSecret: string
   private instance: AxiosInstance = null
 
   get isSetup () {

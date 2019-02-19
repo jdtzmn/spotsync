@@ -10,13 +10,10 @@
 }
 
 .verticallyCenter {
-  // display
-  display: flex;
-  height: 30vh;
+  @extend %verticalAlign;
 
-  // flex
-  flex-direction: column;
-  justify-content: center;
+  // display
+  height: 30vh;
 }
 
 .inputContainer {
